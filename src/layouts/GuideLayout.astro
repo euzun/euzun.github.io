@@ -32,7 +32,6 @@ interface Props {
   isIndex?: boolean;
   toc?: TocSection[];
   currentId?: string;
-  editUrl?: string;
 }
 
 const {
@@ -47,7 +46,6 @@ const {
   isIndex = false,
   toc,
   currentId,
-  editUrl,
 } = Astro.props;
 ---
 
@@ -118,11 +116,8 @@ const {
       <slot />
     </div>
 
-    {editUrl && (
+    {!isIndex && (
       <div class="guide-feedback">
-        <a class="guide-feedback-link" href={editUrl} target="_blank" rel="noopener">
-          <span aria-hidden="true">✎</span> Suggest an edit
-        </a>
         <a class="guide-feedback-link" href={GUIDES_REPO} target="_blank" rel="noopener">
           <span aria-hidden="true">★</span> Star on GitHub
         </a>

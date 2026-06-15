@@ -2,7 +2,6 @@
 import GuideLayout from '../../../layouts/GuideLayout.astro';
 import { getCollection, render } from 'astro:content';
 import { getGuidePages, buildToc } from '../../../lib/guides';
-import { GUIDES_REPO, GUIDES_REPO_BRANCH } from '../../../lib/constants';
 
 export async function getStaticPaths() {
   const metas = await getCollection('guideMeta');
@@ -40,7 +39,6 @@ export async function getStaticPaths() {
           section: `${p.sectionNum} · ${sectionTitles[p.sectionDir] ?? p.sectionDir}`,
           toc,
           currentId: p.id,
-          editUrl: `${GUIDES_REPO}/edit/${GUIDES_REPO_BRANCH}/${p.id}.md`,
           prev: prev ? { href: prev.href, label: `${prev.numLabel} — ${prev.title}` } : null,
           next: next ? { href: next.href, label: `${next.numLabel} — ${next.title}` } : null,
         },
@@ -50,7 +48,7 @@ export async function getStaticPaths() {
   return paths;
 }
 
-const { entry, guideTitle, guideHref, section, toc, currentId, editUrl, prev, next } = Astro.props;
+const { entry, guideTitle, guideHref, section, toc, currentId, prev, next } = Astro.props;
 const { Content } = await render(entry);
 ---
 
@@ -63,7 +61,6 @@ const { Content } = await render(entry);
   description={entry.data.description ?? entry.data.lede}
   toc={toc}
   currentId={currentId}
-  editUrl={editUrl}
   prev={prev}
   next={next}
 >
