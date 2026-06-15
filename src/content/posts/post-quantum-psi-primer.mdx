@@ -1,0 +1,18 @@
+---
+title: "Why post-quantum private set intersection matters"
+description: "An introduction to post-quantum cryptography and why PSI schemes need PQ assumptions for long-lived identifiers."
+pubDate: 2026-05-01
+category: "crypto"
+math: true
+draft: false
+---
+
+> **Note:** This is an early test post while I bootstrap the blog — a short, high-level primer rather than an in-depth treatment. A more rigorous deep-dive (with constructions, security reductions, and benchmarks) is on the way.
+
+Private Set Intersection (PSI) is a cryptographic protocol that allows two parties to compute the intersection of their sets without revealing anything beyond the result. It's foundational for privacy-preserving applications: contact list discovery, biometric search, credential verification, and more.
+
+But here's the problem: most PSI schemes are built on discrete logarithm or integer factorization assumptions — assumptions that quantum computers can break in polynomial time (Shor's algorithm). If you're building systems where the identifiers need to remain secure for decades, PSI schemes need post-quantum assumptions.
+
+The notation $\Pi_{\mathsf{PSI}}^{\mathsf{PQ}}$ represents a post-quantum PSI construction — one built on lattices, isogenies, or other quantum-resistant problems. This matters for government databases, healthcare systems, and any long-lived credential storage.
+
+**Full deep-dive coming soon.** I'll cover lattice-based PSI constructions, security reductions, and practical implementation challenges.

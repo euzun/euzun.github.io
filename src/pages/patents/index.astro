@@ -1,0 +1,99 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const patents = (await getCollection('patents')).sort((a, b) => b.data.year - a.data.year);
+
+const licenses = [
+  {
+    title: 'Enabling Privacy-Preserving Search Over Fuzzy Databases',
+    org: 'Georgia Tech — Office of Technology Licensing',
+    url: 'https://gatech.flintbox.com/technologies/9939d888-98c9-4c1c-81fc-6e31c5650f89',
+  },
+  {
+    title: 'Privacy-Preserving Remote Biometric Authentication (Justitia)',
+    org: 'Georgia Tech — Office of Technology Licensing',
+    url: 'https://gatech.flintbox.com/technologies/6abdc399-943a-433e-bac4-047caa47d9e5',
+  },
+];
+---
+
+<BaseLayout title="Patents · Erkam Uzun" description="Granted USPTO patents in cryptography, biometrics, and security.">
+  <h1>Patents</h1>
+  <p class="lead">{patents.length} granted USPTO patents. Each title links to Google Patents.</p>
+
+  <ol class="patent-list">
+    {patents.map((patent) => (
+      <li class="patent-item">
+        <p class="patent-title">
+          <a href={patent.data.url} target="_blank" rel="noopener noreferrer">{patent.data.title}</a>
+        </p>
+        <p class="patent-meta">
+          <span class="patent-number">{patent.data.number}</span>
+          · {patent.data.assignee} · {patent.data.year}
+        </p>
+      </li>
+    ))}
+  </ol>
+
+  <h2>Technology Licenses</h2>
+  <p class="lead">Inventions available for licensing through Georgia Tech.</p>
+  <ol class="patent-list">
+    {licenses.map((lic) => (
+      <li class="patent-item">
+        <p class="patent-title">
+          <a href={lic.url} target="_blank" rel="noopener noreferrer">{lic.title}</a>
+        </p>
+        <p class="patent-meta">{lic.org}</p>
+      </li>
+    ))}
+  </ol>
+</BaseLayout>
+
+<style>
+  .lead {
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .patent-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .patent-item {
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .patent-item:last-child {
+    border-bottom: none;
+  }
+
+  .patent-title {
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .patent-title a {
+    color: var(--color-text);
+    border-bottom: none;
+  }
+
+  .patent-title a:hover {
+    color: var(--color-accent);
+  }
+
+  .patent-meta {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin-top: 0.2rem;
+  }
+
+  .patent-number {
+    font-family: var(--font-mono);
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+</style>

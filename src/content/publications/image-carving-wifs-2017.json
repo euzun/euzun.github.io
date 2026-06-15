@@ -1,0 +1,32 @@
+{
+  "id": "image-carving-wifs-2017",
+  "title": "Image Carving with Missing Headers and Missing Fragments",
+  "authors": [
+    {
+      "name": "E. Durmus",
+      "isErkam": false
+    },
+    {
+      "name": "M. Mohanty",
+      "isErkam": false
+    },
+    {
+      "name": "S. Taspinar",
+      "isErkam": false
+    },
+    {
+      "name": "E. Uzun",
+      "isErkam": true
+    },
+    {
+      "name": "N. Memon",
+      "isErkam": false
+    }
+  ],
+  "venue": "IEEE WIFS",
+  "venueType": "workshop",
+  "year": 2017,
+  "url": "https://ieeexplore.ieee.org/document/8267665",
+  "projectSlug": "jpgscraper",
+  "bibtex": "@inproceedings{image-carving-wifs-2017,\n  author = {E. Durmus, M. Mohanty, S. Taspinar, E. Uzun, N. Memon},\n  title = {Image Carving with Missing Headers and Missing Fragments},\n  booktitle = {IEEE WIFS},\n  year = {2017}\n}"
+}

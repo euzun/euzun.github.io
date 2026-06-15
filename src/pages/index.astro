@@ -1,0 +1,155 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/blog/PostCard.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../lib/constants';
+
+const allPosts = (await getCollection('posts'))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 3);
+
+const techStack = [
+  'Java', 'Go', 'C++', 'Spring Boot', 'OAuth 2.0', 'OIDC', 'SAML', 'FIDO2 / Passkey',
+  'MPC', 'FHE', 'Post-Quantum Crypto', 'Zero-Knowledge Proofs', 'HSM / Vault',
+  'Nomad', 'Terraform', 'Kubernetes', 'Redis', 'Prometheus', 'Grafana',
+];
+---
+
+<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+  <h1>About me</h1>
+
+  <div class="prose-block">
+    <p>
+      I'm a <strong>security and identity engineer</strong> with a research
+      foundation and a production engineering mindset. I had the privilege of
+      having Professor Wenke Lee as my PhD advisor at Georgia Tech, where I
+      studied privacy-preserving computation, biometric security, and applied
+      cryptography. That experience gave me a permanent bias toward thinking
+      adversarially about every system I touch.
+    </p>
+    <p>
+      Since then, I've built authentication and identity platforms at consumer
+      and enterprise scale — OAuth 2.0, OIDC, SAML, FIDO2/Passkey, token
+      exchange, device attestation via TPM and sensory array fingerprinting, and
+      ML-driven abuse detection — shipping systems that serve hundreds of millions
+      of users and billions of monthly transactions. I don't just integrate these
+      protocols — I've implemented them at the protocol layer, including building
+      my own OIDC-compliant Identity Provider on top of a privacy-preserving
+      remote biometric authentication system I designed during my research.
+    </p>
+    <p>
+      My current focus is the emerging problem of <strong>agentic AI identity</strong>:
+      how agents authenticate, how credentials are scoped and governed, and how
+      trust models built for humans extend to autonomous workflows. I also remain
+      an active researcher — I continue working on practical cryptographic systems
+      including secure multi-party computation, quantum safe cryptography and fuzzy
+      private set intersection, with publicly available codebases — or shared for
+      research purposes when private. Five USPTO patents and 20+ publications
+      (<a href="https://scholar.google.com/citations?hl=en&user=4rKpDxoAAAAJ" target="_blank" rel="noopener noreferrer">500+ citations, h-index 12</a>)
+      at USENIX Security, NDSS, IEEE S&amp;P, ACSAC and AsiaCCS.
+    </p>
+  </div>
+
+  <div class="stack">
+    <span class="stack-label">Tech stack</span>
+    <div class="chips">
+      {techStack.map((t) => <span class="chip">{t}</span>)}
+    </div>
+  </div>
+
+  <h2>Recent posts</h2>
+  <div class="post-grid">
+    {allPosts.map((post) => <PostCard post={post} />)}
+  </div>
+  <p class="mt-6">
+    <a href="/blog" class="font-medium">All posts →</a>
+  </p>
+</BaseLayout>
+
+<style>
+  .prose-block p {
+    margin-bottom: 1rem;
+    color: var(--color-text);
+  }
+
+  .stack {
+    margin: 1.5rem 0 0.5rem;
+  }
+  .stack-label {
+    display: block;
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-accent);
+    opacity: 0.8;
+    margin-bottom: 0.5rem;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .chip {
+    background: var(--color-surface-2);
+    color: var(--color-text);
+    font-size: var(--font-size-xs);
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border);
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+
+  .stat {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1rem 0.5rem;
+    text-align: center;
+    border-bottom: 1px solid var(--color-border);
+    transition: border-color var(--transition-fast);
+  }
+
+  .stat:hover {
+    border-color: var(--color-accent);
+  }
+
+  .stat-num {
+    display: block;
+    font-size: var(--font-size-2xl);
+    font-weight: 600;
+    color: var(--color-accent);
+    font-family: var(--font-display);
+  }
+
+  .stat-label {
+    display: block;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    margin-top: 0.25rem;
+  }
+
+  .post-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .post-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .stat-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

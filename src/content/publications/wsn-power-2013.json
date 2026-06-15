@@ -1,0 +1,27 @@
+{
+  "id": "wsn-power-2013",
+  "title": "The Impact of Transmission Power Control Strategies on Lifetime of Wireless Sensor Networks",
+  "authors": [
+    {
+      "name": "K. Bicakci",
+      "isErkam": false
+    },
+    {
+      "name": "H. Cotuk",
+      "isErkam": false
+    },
+    {
+      "name": "B. Tavli",
+      "isErkam": false
+    },
+    {
+      "name": "E. Uzun",
+      "isErkam": true
+    }
+  ],
+  "venue": "IEEE Transactions on Computers",
+  "venueType": "journal",
+  "year": 2013,
+  "url": "https://ieeexplore.ieee.org/document/6572782",
+  "bibtex": "@article{wsn-power-2013,\n  author = {K. Bicakci, H. Cotuk, B. Tavli, E. Uzun},\n  title = {The Impact of Transmission Power Control Strategies on Lifetime of Wireless Sensor Networks},\n  booktitle = {IEEE Transactions on Computers},\n  year = {2013}\n}"
+}

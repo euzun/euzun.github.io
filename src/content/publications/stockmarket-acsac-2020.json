@@ -1,0 +1,35 @@
+{
+  "id": "stockmarket-acsac-2020",
+  "title": "On the Feasibility of Automating Stock Market Manipulation",
+  "authors": [
+    {
+      "name": "C. Yagemann",
+      "isErkam": false
+    },
+    {
+      "name": "S. Chung",
+      "isErkam": false
+    },
+    {
+      "name": "E. Uzun",
+      "isErkam": true
+    },
+    {
+      "name": "S. Ragam",
+      "isErkam": false
+    },
+    {
+      "name": "B. Saltaformaggio",
+      "isErkam": false
+    },
+    {
+      "name": "W. Lee",
+      "isErkam": false
+    }
+  ],
+  "venue": "ACSAC",
+  "venueType": "conference",
+  "year": 2020,
+  "url": "https://dl.acm.org/doi/10.1145/3427228.3427241",
+  "bibtex": "@inproceedings{stockmarket-acsac-2020,\n  author = {C. Yagemann, S. Chung, E. Uzun, S. Ragam, B. Saltaformaggio, W. Lee},\n  title = {On the Feasibility of Automating Stock Market Manipulation},\n  booktitle = {ACSAC},\n  year = {2020}\n}"
+}

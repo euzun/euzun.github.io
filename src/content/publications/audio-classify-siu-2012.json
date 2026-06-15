@@ -1,0 +1,19 @@
+{
+  "id": "audio-classify-siu-2012",
+  "title": "Classification of audios containing speech and music",
+  "authors": [
+    {
+      "name": "E. Uzun",
+      "isErkam": true
+    },
+    {
+      "name": "H. T. Sencar",
+      "isErkam": false
+    }
+  ],
+  "venue": "IEEE Signal Processing and Communications Applications Conference (SIU) (Turkish)",
+  "venueType": "conference",
+  "year": 2012,
+  "bibtex": "@inproceedings{audio-classify-siu-2012,\n  author = {E. Uzun, H. T. Sencar},\n  title = {Classification of audios containing speech and music},\n  booktitle = {IEEE Signal Processing and Communications Applications Conference (SIU)},\n  year = {2012}\n}",
+  "url": "https://ieeexplore.ieee.org/document/6204616/"
+}

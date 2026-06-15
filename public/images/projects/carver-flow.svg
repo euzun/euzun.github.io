@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 980" width="720" height="980" font-family="Inter, system-ui, sans-serif" role="img" aria-label="Orphaned JPEG file carving process flow">
+  <defs>
+    <marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#5b7384"/></marker>
+  </defs>
+
+  <rect x="4" y="4" width="712" height="972" rx="16" fill="#f4f8fb" stroke="#d9e2e8"/>
+  <text x="360" y="36" text-anchor="middle" font-size="17" font-weight="700" fill="#16384a">Orphaned JPEG File Carving — Process Flow</text>
+
+  <!-- ARROWS (drawn first, under nodes) -->
+  <g fill="none" stroke="#5b7384" stroke-width="1.6">
+    <line x1="380" y1="110" x2="380" y2="134" marker-end="url(#ah)"/>
+    <line x1="380" y1="184" x2="380" y2="208" marker-end="url(#ah)"/>
+    <line x1="380" y1="258" x2="380" y2="282" marker-end="url(#ah)"/>
+    <line x1="380" y1="332" x2="380" y2="352" marker-end="url(#ah)"/>
+    <line x1="380" y1="422" x2="380" y2="444" marker-end="url(#ah)"/>
+    <line x1="380" y1="494" x2="380" y2="518" marker-end="url(#ah)"/>
+    <line x1="380" y1="568" x2="380" y2="592" marker-end="url(#ah)"/>
+    <line x1="380" y1="642" x2="380" y2="666" marker-end="url(#ah)"/>
+    <line x1="380" y1="716" x2="380" y2="740" marker-end="url(#ah)"/>
+    <line x1="380" y1="790" x2="380" y2="810" marker-end="url(#ah)"/>
+    <line x1="380" y1="880" x2="380" y2="904" marker-end="url(#ah)"/>
+    <!-- data feeds -->
+    <line x1="552" y1="234" x2="487" y2="234" marker-end="url(#ah)"/>
+    <line x1="552" y1="544" x2="487" y2="544" marker-end="url(#ah)"/>
+    <!-- D5 no -> sideA -->
+    <line x1="286" y1="388" x2="218" y2="388" marker-end="url(#ah)"/>
+    <!-- sideA yes -> loop to N3 -->
+    <path d="M130,358 L130,234 L273,234" marker-end="url(#ah)"/>
+    <!-- D11 no -> sideB -->
+    <line x1="286" y1="846" x2="218" y2="846" marker-end="url(#ah)"/>
+    <!-- sideB yes -> loop to N7 -->
+    <path d="M130,816 L130,544 L273,544" marker-end="url(#ah)"/>
+    <!-- sideA no -> Return NULL (far-left lane) -->
+    <path d="M44,388 L30,388 L30,928 L58,928" marker-end="url(#ah)"/>
+    <!-- sideB no -> Return NULL -->
+    <line x1="130" y1="876" x2="130" y2="906" marker-end="url(#ah)"/>
+  </g>
+
+  <!-- arrow labels -->
+  <g font-size="10.5" font-weight="700" fill="#2f6f99">
+    <text x="392" y="438">yes</text>
+    <text x="252" y="381">no</text>
+    <text x="139" y="300">yes</text>
+    <text x="392" y="898">yes</text>
+    <text x="252" y="839">no</text>
+    <text x="139" y="610">yes</text>
+    <text x="40" y="660">no</text>
+    <text x="139" y="898">no</text>
+  </g>
+
+  <!-- DATA STORES -->
+  <g stroke="#2f6f99" stroke-width="1.4">
+    <polygon points="560,215 680,215 660,253 540,253" fill="#d3e3ec"/>
+    <polygon points="560,525 680,525 660,563 540,563" fill="#d3e3ec"/>
+  </g>
+  <g font-size="11.5" fill="#16384a" text-anchor="middle">
+    <text x="610" y="231"><tspan x="610">Huffman</tspan><tspan x="610" dy="14">Table Sets</tspan></text>
+    <text x="610" y="541"><tspan x="610">Quant.</tspan><tspan x="610" dy="14">Table Sets</tspan></text>
+  </g>
+
+  <!-- PROCESS BOXES -->
+  <g stroke="#2f6f99" stroke-width="1.6">
+    <rect x="275" y="138" width="210" height="44" rx="8" fill="#ffffff"/>
+    <rect x="275" y="212" width="210" height="44" rx="8" fill="#ffffff"/>
+    <rect x="275" y="286" width="210" height="44" rx="8" fill="#ffffff"/>
+    <rect x="275" y="448" width="210" height="44" rx="8" fill="#ffffff"/>
+    <rect x="275" y="522" width="210" height="44" rx="8" fill="#ffffff"/>
+    <rect x="275" y="596" width="210" height="44" rx="8" fill="#ffffff"/>
+    <rect x="275" y="670" width="210" height="44" rx="8" fill="#ffffff"/>
+    <rect x="275" y="744" width="210" height="44" rx="8" fill="#ffffff"/>
+  </g>
+  <g font-size="12.5" fill="#182a38" text-anchor="middle">
+    <text x="380" y="164"><tspan x="380">Find Possible</tspan><tspan x="380" dy="15">Byte Boundaries</tspan></text>
+    <text x="380" y="238"><tspan x="380">Load Next</tspan><tspan x="380" dy="15">Huffman Tables</tspan></text>
+    <text x="380" y="305"><tspan x="380">Decode as</tspan><tspan x="380" dy="15">YCbCr / YYCbCr / YYYYCbCr</tspan></text>
+    <text x="380" y="475">Detect MCU Structure</text>
+    <text x="380" y="540"><tspan x="380">Load Next Chroma</tspan><tspan x="380" dy="15">Subsampling Scheme</tspan></text>
+    <text x="380" y="615"><tspan x="380">Detect Luminance Layout</tspan><tspan x="380" dy="15">&amp; Quant. Tables</tspan></text>
+    <text x="380" y="697">Detect Image Width</text>
+    <text x="380" y="764"><tspan x="380">Position Blocks;</tspan><tspan x="380" dy="15">Adjust Brightness &amp; Color</tspan></text>
+  </g>
+
+  <!-- DECISIONS (center) -->
+  <g stroke="#2f6f99" stroke-width="1.6">
+    <polygon points="380,354 474,388 380,422 286,388" fill="#e3eef4"/>
+    <polygon points="380,812 474,846 380,880 286,846" fill="#e3eef4"/>
+  </g>
+  <g font-size="12" fill="#182a38" text-anchor="middle">
+    <text x="380" y="384"><tspan x="380">Valid coefficient</tspan><tspan x="380" dy="14">array?</tspan></text>
+    <text x="380" y="842"><tspan x="380">Natural image</tspan><tspan x="380" dy="14">statistics?</tspan></text>
+  </g>
+
+  <!-- SIDE DECISIONS (retry loops) -->
+  <g stroke="#2f6f99" stroke-width="1.6">
+    <polygon points="130,358 216,388 130,418 44,388" fill="#dfeaf2"/>
+    <polygon points="130,816 216,846 130,876 44,846" fill="#dfeaf2"/>
+  </g>
+  <g font-size="11.5" fill="#182a38" text-anchor="middle">
+    <text x="130" y="384"><tspan x="130">More Huffman</tspan><tspan x="130" dy="13">tables?</tspan></text>
+    <text x="130" y="842"><tspan x="130">More chroma</tspan><tspan x="130" dy="13">schemes?</tspan></text>
+  </g>
+
+  <!-- START / END -->
+  <rect x="290" y="64" width="180" height="44" rx="22" fill="#355f93"/>
+  <text x="380" y="91" text-anchor="middle" font-size="13" font-weight="600" fill="#ffffff">Read Binary Data</text>
+
+  <rect x="288" y="906" width="184" height="44" rx="22" fill="#2f7f99"/>
+  <text x="380" y="926" text-anchor="middle" font-size="12.5" font-weight="600" fill="#ffffff"><tspan x="380">Construct &amp;</tspan><tspan x="380" dy="15">Save Image</tspan></text>
+
+  <rect x="58" y="906" width="144" height="44" rx="22" fill="#7d8c97"/>
+  <text x="130" y="933" text-anchor="middle" font-size="13" font-weight="600" fill="#ffffff">Return NULL</text>
+</svg>

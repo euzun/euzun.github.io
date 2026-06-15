@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 600" width="720" height="600" font-family="Inter, system-ui, sans-serif" role="img" aria-label="DecodeAs sub-process flow">
+  <defs>
+    <marker id="ah2" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#5b7384"/></marker>
+  </defs>
+
+  <rect x="4" y="4" width="712" height="592" rx="16" fill="#f4f8fb" stroke="#d9e2e8"/>
+  <text x="360" y="36" text-anchor="middle" font-size="17" font-weight="700" fill="#16384a">DecodeAs — Sub-process</text>
+
+  <!-- ARROWS -->
+  <g fill="none" stroke="#5b7384" stroke-width="1.6">
+    <line x1="380" y1="110" x2="380" y2="148" marker-end="url(#ah2)"/>
+    <line x1="380" y1="196" x2="380" y2="228" marker-end="url(#ah2)"/>
+    <line x1="380" y1="276" x2="380" y2="304" marker-end="url(#ah2)"/>
+    <line x1="380" y1="374" x2="380" y2="404" marker-end="url(#ah2)"/>
+    <line x1="380" y1="474" x2="380" y2="510" marker-end="url(#ah2)"/>
+    <!-- D2 no -> loop back to N3 (Decode Next MCU) -->
+    <path d="M480,440 L560,440 L560,252 L487,252" marker-end="url(#ah2)"/>
+    <!-- D1 no -> D3 -->
+    <line x1="280" y1="340" x2="252" y2="340" marker-end="url(#ah2)"/>
+    <!-- D3 yes (Has) -> loop back to N2 -->
+    <path d="M158,308 L158,172 L273,172" marker-end="url(#ah2)"/>
+    <!-- D3 no -> Return NULL -->
+    <line x1="158" y1="372" x2="158" y2="446" marker-end="url(#ah2)"/>
+  </g>
+
+  <g font-size="10.5" font-weight="700" fill="#2f6f99">
+    <text x="392" y="398">yes</text>
+    <text x="392" y="500">yes</text>
+    <text x="520" y="432">no</text>
+    <text x="258" y="332">no</text>
+    <text x="166" y="262">yes</text>
+    <text x="166" y="416">no</text>
+  </g>
+
+  <!-- PROCESS BOXES -->
+  <g stroke="#2f6f99" stroke-width="1.6">
+    <rect x="275" y="150" width="210" height="46" rx="8" fill="#ffffff"/>
+    <rect x="275" y="230" width="210" height="46" rx="8" fill="#ffffff"/>
+  </g>
+  <g font-size="12.5" fill="#182a38" text-anchor="middle">
+    <text x="380" y="168"><tspan x="380">Load Next Byte Boundary;</tspan><tspan x="380" dy="15">Reset Variables</tspan></text>
+    <text x="380" y="258">Decode Next MCU as MCU_STR</text>
+  </g>
+
+  <!-- DECISIONS (center) -->
+  <g stroke="#2f6f99" stroke-width="1.6">
+    <polygon points="380,306 480,340 380,374 280,340" fill="#e3eef4"/>
+    <polygon points="380,406 480,440 380,474 280,440" fill="#e3eef4"/>
+  </g>
+  <g font-size="12.5" fill="#182a38" text-anchor="middle">
+    <text x="380" y="344">Is Valid?</text>
+    <text x="380" y="444">End of Chunk?</text>
+  </g>
+
+  <!-- SIDE DECISION -->
+  <g stroke="#2f6f99" stroke-width="1.6">
+    <polygon points="158,308 250,340 158,372 66,340" fill="#dfeaf2"/>
+  </g>
+  <text x="158" y="336" text-anchor="middle" font-size="11.5" fill="#182a38"><tspan x="158">Has Next Byte</tspan><tspan x="158" dy="13">Boundary?</tspan></text>
+
+  <!-- START -->
+  <rect x="265" y="54" width="230" height="56" rx="14" fill="#355f93"/>
+  <text x="380" y="79" text-anchor="middle" fill="#ffffff"><tspan x="380" font-size="13" font-weight="600">DecodeAs(MCU_STR)</tspan><tspan x="380" dy="17" font-size="11">{ YCbCr | YYCbCr | YYYYCbCr }</tspan></text>
+
+  <!-- ENDS -->
+  <rect x="270" y="510" width="220" height="46" rx="23" fill="#2f7f99"/>
+  <text x="380" y="538" text-anchor="middle" font-size="12.5" font-weight="600" fill="#ffffff">Return Last Coefficients</text>
+
+  <rect x="88" y="446" width="140" height="44" rx="22" fill="#7d8c97"/>
+  <text x="158" y="473" text-anchor="middle" font-size="13" font-weight="600" fill="#ffffff">Return NULL</text>
+</svg>

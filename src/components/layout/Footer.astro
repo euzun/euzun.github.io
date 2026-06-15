@@ -1,0 +1,53 @@
+---
+import { AUTHOR, SOCIAL_LINKS } from '../../lib/constants';
+---
+
+<footer class="border-t border-border bg-surface py-12 mt-20">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-6">
+      <div class="text-sm text-text-muted">
+        © 2026 {AUTHOR} · Built with Astro
+      </div>
+      <div class="flex gap-6 text-sm">
+        <a
+          href="/rss.xml"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-text-muted hover:text-accent transition-colors"
+        >
+          RSS
+        </a>
+        <a
+          href={SOCIAL_LINKS.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-text-muted hover:text-accent transition-colors"
+        >
+          GitHub
+        </a>
+        <a
+          href={SOCIAL_LINKS.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-text-muted hover:text-accent transition-colors"
+        >
+          LinkedIn
+        </a>
+        <a
+          href={SOCIAL_LINKS.scholar}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-text-muted hover:text-accent transition-colors"
+        >
+          Scholar
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  a {
+    border-bottom: none;
+  }
+</style>

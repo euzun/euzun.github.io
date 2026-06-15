@@ -1,0 +1,19 @@
+{
+  "id": "audio-speech-2014",
+  "title": "A Preliminary Examination Technique for Audio Evidence to Distinguish Speech from Non-Speech Using Objective Speech Quality Measures",
+  "authors": [
+    {
+      "name": "E. Uzun",
+      "isErkam": true
+    },
+    {
+      "name": "H. T. Sencar",
+      "isErkam": false
+    }
+  ],
+  "venue": "Speech Communication (Elsevier)",
+  "venueType": "journal",
+  "year": 2014,
+  "url": "https://www.researchgate.net/publication/261326085",
+  "bibtex": "@article{audio-speech-2014,\n  author = {E. Uzun, H. T. Sencar},\n  title = {A Preliminary Examination Technique for Audio Evidence to Distinguish Speech from Non-Speech Using Objective Speech Quality Measures},\n  booktitle = {Speech Communication (Elsevier)},\n  year = {2014}\n}"
+}

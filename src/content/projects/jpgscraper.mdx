@@ -1,0 +1,53 @@
+---
+name: "Image Forensics (JpgScraper)"
+shortDescription: "Orphaned JPEG file carving — recovering deleted/fragmented image data without headers, using specialized decoders and camera-sensor fingerprinting."
+role: "Researcher"
+org: "NYU Abu Dhabi"
+tech: ["Digital Forensics", "Image Carving", "JPEG", "PRNU / Sensor Noise"]
+yearStart: 2013
+yearEnd: 2019
+hero: "/images/projects/image-forensics-banner.svg"
+icon: "/images/projects/image-forensics-icon.svg"
+heroAlt: "Image Forensics — orphaned JPEG carving"
+resources:
+  - label: "Code — jpgscraper (crawler, discriminator, decoder, assembler)"
+    url: "https://github.com/euzun/jpgscraper"
+relatedPublications: ["jpgscraper-2019", "jpgcarving-2015", "image-carving-wifs-2017"]
+---
+
+This research focuses on **orphaned file carving** — recovering deleted JPEG
+files from forensic devices when the file-system metadata is gone. It combines
+specialized JPEG decoders, encoded-data discriminators, and fragment-assembly
+tools that leverage camera sensor-noise (PRNU) patterns to locate and reassemble
+image fragments.
+
+### Details
+
+In the context of forensic investigations, carving for deleted files and
+salvaging of data from damaged and faulty media are common procedures. By
+offering the ability to perform data recovery on a block basis, orphaned file
+carving approaches effectively increase the amount of recoverable evidence from
+devices. Orphaned file fragment carving is concerned with recovering contents of
+encoded data in the absence of any coding metadata. Constructing an orphaned file
+carver requires addressing different challenges: a specialized decoder to
+interpret partial file data; the ability to discriminate a specific type of
+encoded data from all other types of data; and comprehensive prior knowledge on
+possible encoding settings. Throughout this project, I studied on designing and
+building following tools.
+
+![JpgScraper — orphaned JPEG fragment carving pipeline](/images/projects/jpgscraper.png)
+
+- **Crawler:** A social media (e.g. Flickr) crawler that collects and analyzes millions of public JPEG files.
+- **Discriminator:** An encoded-JPEG data discriminator against hundreds of different data types.
+- **Decoder:** An error-tolerant partial JPEG fragment decoder.
+- **Assembler:** A partial JPEG fragment assembler, which is leveraging PRNU sensor noise.
+
+<figure>
+  <img src="/images/projects/carver-flow.svg" alt="Process flow of the proposed file-carving technique" style="display:block;width:100%;max-width:540px;margin:1.5rem auto 0.4rem;" />
+  <figcaption style="text-align:center;font-size:0.85rem;color:var(--color-text-muted);">Process flow of the proposed file-carving technique.</figcaption>
+</figure>
+
+<figure>
+  <img src="/images/projects/decode-subprocess.svg" alt="Detailed view of the DecodeAs sub-process" style="display:block;width:100%;max-width:540px;margin:1.5rem auto 0.4rem;" />
+  <figcaption style="text-align:center;font-size:0.85rem;color:var(--color-text-muted);">Detailed view of the <code>DecodeAs</code> sub-process.</figcaption>
+</figure>

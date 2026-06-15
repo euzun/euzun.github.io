@@ -1,0 +1,48 @@
+---
+import GuideLayout from '../../../layouts/GuideLayout.astro';
+import { getCollection } from 'astro:content';
+import { getGuidePages, buildToc } from '../../../lib/guides';
+
+export async function getStaticPaths() {
+  const metas = await getCollection('guideMeta');
+  return metas.map((m) => ({
+    params: { guide: m.data.slug },
+    props: { meta: m.data },
+  }));
+}
+
+const { meta } = Astro.props;
+const pages = await getGuidePages(meta.slug);
+const toc = buildToc(pages, meta.sectionTitles ?? {});
+---
+
+<GuideLayout
+  title={meta.title}
+  guideTitle={meta.title}
+  guideHref={`/guides/${meta.slug}`}
+  lede={meta.description}
+  description={meta.description}
+  isIndex={true}
+>
+  {meta.note && (
+    <div class="callout info">
+      <div class="callout-label">A note on examples</div>
+      <p>{meta.note}</p>
+    </div>
+  )}
+  {toc.map((section) => (
+    <section class="toc-section">
+      <h2>{section.num} · {section.title}</h2>
+      <ul>
+        {section.pages.map((p) => (
+          <li>
+            <a href={p.href}>
+              <span class="num">{p.numLabel}</span>
+              <span>{p.title}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+</GuideLayout>

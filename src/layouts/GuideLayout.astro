@@ -1,0 +1,720 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Sidebar from '../components/layout/Sidebar.astro';
+import { GUIDES_REPO } from '../lib/constants';
+
+interface NavItem {
+  href: string;
+  label: string;
+}
+
+interface TocPage {
+  href: string;
+  numLabel: string;
+  title: string;
+  id: string;
+}
+interface TocSection {
+  num: number;
+  title: string;
+  pages: TocPage[];
+}
+
+interface Props {
+  title: string;
+  guideTitle: string;
+  guideHref: string;
+  section?: string;
+  lede: string;
+  description?: string;
+  prev?: NavItem | null;
+  next?: NavItem | null;
+  isIndex?: boolean;
+  toc?: TocSection[];
+  currentId?: string;
+  editUrl?: string;
+}
+
+const {
+  title,
+  guideTitle,
+  guideHref,
+  section,
+  lede,
+  description,
+  prev = null,
+  next = null,
+  isIndex = false,
+  toc,
+  currentId,
+  editUrl,
+} = Astro.props;
+---
+
+<BaseLayout title={`${title} — ${guideTitle}`} description={description ?? lede}>
+  <div class="guide-aside" slot="sidebar">
+    <Sidebar />
+    {toc && (
+      <nav class="guide-nav" aria-label="Guide contents">
+        <a class="guide-nav-title" href={guideHref}>{guideTitle}</a>
+        {toc.map((s) => (
+          <details class="guide-nav-section" open={s.pages.some((p) => p.id === currentId)}>
+            <summary>
+              <span class="sec-num">{s.num}</span>
+              <span class="sec-title">{s.title}</span>
+            </summary>
+            <ul>
+              {s.pages.map((p) => (
+                <li>
+                  <a
+                    href={p.href}
+                    class={p.id === currentId ? 'active' : ''}
+                    aria-current={p.id === currentId ? 'page' : undefined}
+                  >
+                    <span class="num">{p.numLabel}</span>
+                    <span>{p.title}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </details>
+        ))}
+      </nav>
+    )}
+  </div>
+
+  <div class="guide-page">
+
+    <nav class="guide-crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="sep" aria-hidden="true">›</span>
+      <a href="/guides">Guides</a>
+      {isIndex ? (
+        <>
+          <span class="sep" aria-hidden="true">›</span>
+          <span>{guideTitle}</span>
+        </>
+      ) : (
+        <>
+          <span class="sep" aria-hidden="true">›</span>
+          <a href={guideHref}>{guideTitle}</a>
+          {section && (
+            <>
+              <span class="sep" aria-hidden="true">›</span>
+              <span>{section}</span>
+            </>
+          )}
+        </>
+      )}
+    </nav>
+
+    <header class="guide-header">
+      {section && <div class="guide-section-label">{section}</div>}
+      <h1>{title}</h1>
+      <p class="guide-lede">{lede}</p>
+    </header>
+
+    <div class="guide-content">
+      <slot />
+    </div>
+
+    {editUrl && (
+      <div class="guide-feedback">
+        <a class="guide-feedback-link" href={editUrl} target="_blank" rel="noopener">
+          <span aria-hidden="true">✎</span> Suggest an edit
+        </a>
+        <a class="guide-feedback-link" href={GUIDES_REPO} target="_blank" rel="noopener">
+          <span aria-hidden="true">★</span> Star on GitHub
+        </a>
+      </div>
+    )}
+
+    {(prev || next) && (
+      <nav class={`guide-prev-next ${prev && next ? 'both' : ''}`} aria-label="Page navigation">
+        {prev && (
+          <a href={prev.href} class="guide-nav-card">
+            <span class="nav-dir">← Previous</span>
+            <span class="nav-label">{prev.label}</span>
+          </a>
+        )}
+        {next && (
+          <a href={next.href} class="guide-nav-card">
+            <span class="nav-dir">Next →</span>
+            <span class="nav-label">{next.label}</span>
+          </a>
+        )}
+      </nav>
+    )}
+
+  </div>
+</BaseLayout>
+
+<script type="module" is:inline>
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+function getMermaidTheme() {
+  return document.documentElement.classList.contains('dark') ? 'dark' : 'default';
+}
+
+// Save source before mermaid processes and replaces innerHTML
+document.querySelectorAll('pre.mermaid').forEach(el => {
+  el.dataset.src = el.textContent.trim();
+});
+
+async function renderDiagrams() {
+  // Restore any already-rendered diagrams back to pre.mermaid
+  document.querySelectorAll('pre.mermaid[data-processed]').forEach(el => {
+    el.removeAttribute('data-processed');
+    el.textContent = el.dataset.src || '';
+  });
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: getMermaidTheme(),
+    themeVariables: {
+      fontFamily: 'Inter, -apple-system, system-ui, sans-serif',
+      fontSize: '14px',
+    },
+    securityLevel: 'loose',
+  });
+  await mermaid.run({ querySelector: 'pre.mermaid' });
+}
+
+renderDiagrams();
+
+// Re-render when the user toggles the site theme
+new MutationObserver(() => renderDiagrams())
+  .observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+// ── Diagram zoom — delegated, lazy SVG lookup at click time ──────
+// Uses the site's existing #lightbox overlay (from Lightbox.astro).
+document.addEventListener('click', (e) => {
+  const diagram = e.target.closest('.diagram');
+  if (!diagram) return;
+
+  const lb    = document.getElementById('lightbox');
+  const lbImg = lb?.querySelector('img');
+  const lbCap = lb?.querySelector('figcaption');
+  if (!lb || !lbImg) return;
+
+  const svg = diagram.querySelector('svg');
+  if (!svg) return;
+
+  // Clone and stamp actual pixel dimensions so the img has a concrete size to render into.
+  // Without this the SVG's "max-width:100%" has no container and resolves to zero.
+  const rect = svg.getBoundingClientRect();
+  const clone = svg.cloneNode(true);
+  clone.setAttribute('width',  String(Math.round(rect.width)));
+  clone.setAttribute('height', String(Math.round(rect.height)));
+  if (!clone.getAttribute('xmlns')) clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+  const svgStr = new XMLSerializer().serializeToString(clone);
+  const blob = new Blob([svgStr], { type: 'image/svg+xml' });
+  if (lbImg.src.startsWith('blob:')) URL.revokeObjectURL(lbImg.src);
+  lbImg.src = URL.createObjectURL(blob);
+  lbImg.alt = 'Diagram';
+  if (lbCap) lbCap.hidden = true;
+  lb.hidden = false;
+  lb.scrollTop = 0;
+  document.documentElement.classList.add('lightbox-open');
+});
+</script>
+
+<style is:global>
+/* ── Guide page shell ────────────────────────────────────────── */
+.guide-page {
+  max-width: var(--measure-wide);
+}
+
+/* ── Sidebar: author card + collapsible page nav ─────────────── */
+.guide-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.guide-nav {
+  font-size: var(--font-size-sm);
+}
+.guide-nav-title {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--color-border);
+}
+.guide-nav-title:hover { color: var(--color-accent); }
+
+/* Section disclosure */
+.guide-nav-section {
+  border-bottom: 1px solid var(--color-border);
+}
+.guide-nav-section > summary {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  cursor: pointer;
+  padding: 0.5rem 0.25rem;
+  list-style: none;
+  font-weight: 600;
+  color: var(--color-text);
+  transition: color var(--transition-fast);
+}
+.guide-nav-section > summary::-webkit-details-marker { display: none; }
+.guide-nav-section > summary:hover { color: var(--color-accent); }
+.guide-nav-section > summary .sec-num {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-subtle);
+  flex-shrink: 0;
+  min-width: 1.3rem;
+}
+.guide-nav-section > summary .sec-title { flex: 1; }
+/* disclosure chevron */
+.guide-nav-section > summary::after {
+  content: '›';
+  margin-left: auto;
+  color: var(--color-text-subtle);
+  transition: transform var(--transition-fast);
+}
+.guide-nav-section[open] > summary::after { transform: rotate(90deg); }
+
+.guide-nav-section ul {
+  list-style: none;
+  padding: 0 0 0.5rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.guide-nav-section li { margin: 0; }
+.guide-nav-section li::marker { content: none; }
+.guide-nav-section a {
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  padding: 0.3rem 0.5rem 0.3rem 1.8rem;
+  border-radius: var(--radius-sm);
+  border-bottom: none;
+  color: var(--color-text-muted);
+  line-height: var(--line-height-snug);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+.guide-nav-section a:hover {
+  background: var(--color-surface);
+  color: var(--color-accent);
+}
+.guide-nav-section a.active {
+  background: var(--color-accent-muted);
+  color: var(--color-accent-text);
+  font-weight: 600;
+}
+.guide-nav-section a .num {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-subtle);
+  flex-shrink: 0;
+  min-width: 1.9rem;
+}
+.guide-nav-section a.active .num { color: var(--color-accent-text); }
+
+/* ── Breadcrumbs ─────────────────────────────────────────────── */
+.guide-crumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: 1.75rem;
+}
+.guide-crumbs a {
+  color: var(--color-text-muted);
+  border-bottom: none;
+  transition: color var(--transition-fast);
+}
+.guide-crumbs a:hover { color: var(--color-accent); }
+.guide-crumbs .sep { color: var(--color-text-subtle); }
+
+/* ── Page header ─────────────────────────────────────────────── */
+.guide-header {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.guide-section-label {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent-text);
+  margin-bottom: 0.6rem;
+}
+
+.guide-header h1 {
+  font-family: var(--font-display);
+  font-size: var(--font-size-4xl);
+  font-weight: 600;
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.015em;
+  margin-bottom: 0.75rem;
+  color: var(--color-text);
+}
+
+.guide-lede {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-muted);
+  max-width: 60ch;
+  margin: 0;
+}
+
+/* ── Content typography ──────────────────────────────────────── */
+.guide-content h2 {
+  font-family: var(--font-display);
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  line-height: var(--line-height-snug);
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.guide-content h3 {
+  font-family: var(--font-body);
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.guide-content p {
+  line-height: var(--line-height-relaxed);
+  margin: 1.1rem 0;
+  color: var(--color-text);
+}
+
+.guide-content ul,
+.guide-content ol {
+  margin: 1rem 0;
+  padding-left: 1.6rem;
+}
+.guide-content ul { list-style: disc; }
+.guide-content ol { list-style: decimal; }
+.guide-content li {
+  margin: 0.4rem 0;
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text);
+}
+.guide-content li::marker { color: var(--color-accent); }
+
+.guide-content strong { font-weight: 600; }
+
+.guide-content a {
+  color: var(--color-accent-text);
+  border-bottom: 1px solid var(--color-accent-muted);
+}
+.guide-content a:hover { border-bottom-color: var(--color-accent); }
+
+.guide-content code:not(pre code) {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--color-code-bg);
+  padding: 0.15em 0.4em;
+  border-radius: var(--radius-sm);
+}
+.guide-content pre {
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  font-size: var(--font-size-sm);
+}
+
+/* ── Mermaid diagram container ───────────────────────────────── */
+.diagram {
+  margin: 2rem 0;
+  padding: 1.5rem 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow-x: auto;
+  cursor: zoom-in;
+  transition: border-color var(--transition-fast);
+}
+.diagram:hover {
+  border-color: var(--color-accent);
+}
+.diagram pre.mermaid {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0;
+}
+.diagram svg {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+/* ── Tables ──────────────────────────────────────────────────── */
+.guide-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.75rem 0;
+  font-size: var(--font-size-sm);
+  overflow-x: auto;
+  display: block;
+}
+.guide-content thead tr {
+  background: var(--color-surface-2);
+}
+.guide-content th {
+  font-weight: 600;
+  text-align: left;
+  padding: 0.6rem 1rem;
+  border-bottom: 2px solid var(--color-border-2);
+  color: var(--color-text);
+  white-space: nowrap;
+}
+.guide-content td {
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: top;
+  color: var(--color-text);
+  line-height: var(--line-height-relaxed);
+}
+.guide-content tbody tr:hover td {
+  background: var(--color-surface);
+}
+
+/* ── Callouts ────────────────────────────────────────────────── */
+.callout {
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+}
+.callout p { margin: 0.4rem 0; color: inherit; }
+.callout p:first-of-type { margin-top: 0.2rem; }
+.callout p:last-child { margin-bottom: 0; }
+
+.callout-label {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+/* info — accent blue */
+.callout.info {
+  background: var(--color-accent-muted);
+  border: 1px solid oklch(from var(--color-accent) l c h / 0.25);
+  border-left: 3px solid var(--color-accent);
+  color: var(--color-text);
+}
+.callout.info .callout-label { color: var(--color-accent-text); }
+
+/* warn — amber */
+.callout.warn {
+  background: oklch(0.97 0.02 80);
+  border: 1px solid oklch(0.85 0.06 80);
+  border-left: 3px solid oklch(0.65 0.12 80);
+  color: var(--color-text);
+}
+.callout.warn .callout-label { color: oklch(0.55 0.12 80); }
+.dark .callout.warn {
+  background: oklch(0.18 0.03 80);
+  border-color: oklch(0.30 0.06 80);
+  border-left-color: oklch(0.72 0.14 80);
+}
+.dark .callout.warn .callout-label { color: oklch(0.80 0.14 80); }
+
+/* crit — red */
+.callout.crit {
+  background: oklch(0.97 0.015 25);
+  border: 1px solid oklch(0.88 0.05 25);
+  border-left: 3px solid oklch(0.58 0.18 25);
+  color: var(--color-text);
+}
+.callout.crit .callout-label { color: oklch(0.50 0.18 25); }
+.dark .callout.crit {
+  background: oklch(0.16 0.03 25);
+  border-color: oklch(0.28 0.07 25);
+  border-left-color: oklch(0.68 0.18 25);
+}
+.dark .callout.crit .callout-label { color: oklch(0.75 0.18 25); }
+
+/* textbook vs. reality — violet (teaching device: what you may have learned
+   vs. what actually happens) */
+.callout.textbook {
+  background: oklch(0.97 0.025 300);
+  border: 1px solid oklch(0.85 0.07 300);
+  border-left: 3px solid oklch(0.55 0.18 300);
+  color: var(--color-text);
+}
+.callout.textbook .callout-label { color: oklch(0.48 0.20 300); }
+.dark .callout.textbook {
+  background: oklch(0.18 0.035 300);
+  border-color: oklch(0.31 0.07 300);
+  border-left-color: oklch(0.66 0.18 300);
+}
+.dark .callout.textbook .callout-label { color: oklch(0.82 0.15 300); }
+
+/* ── Takeaway ────────────────────────────────────────────────── */
+.takeaway {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  margin: 2rem 0;
+}
+.takeaway .label {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent-text);
+  margin-bottom: 0.4rem;
+}
+.takeaway p {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text);
+}
+
+/* ── TOC (cover / index page) ────────────────────────────────── */
+.toc-section {
+  margin-bottom: 2rem;
+}
+.toc-section h2 {
+  font-family: var(--font-display);
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--color-border);
+}
+.toc-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.toc-section li { margin: 0; }
+.toc-section li::marker { display: none; }
+.toc-section a {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius-sm);
+  border-bottom: none;
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+.toc-section a:hover {
+  background: var(--color-surface);
+  color: var(--color-accent);
+}
+.toc-section .num {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-subtle);
+  flex-shrink: 0;
+  min-width: 2.2rem;
+}
+
+/* ── Feedback row (edit / star) ──────────────────────────────── */
+.guide-feedback {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-border);
+  font-size: var(--font-size-sm);
+}
+.guide-feedback-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--color-text-muted);
+  border-bottom: none;
+  transition: color var(--transition-fast);
+}
+.guide-feedback-link:hover { color: var(--color-accent); }
+
+/* ── Prev / Next navigation ──────────────────────────────────── */
+.guide-prev-next {
+  display: flex;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+.guide-prev-next.both {
+  justify-content: space-between;
+}
+.guide-prev-next:not(.both) {
+  justify-content: flex-end;
+}
+.guide-prev-next:not(.both) .guide-nav-card:first-child:only-child {
+  margin-right: auto;
+}
+
+.guide-nav-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  border-bottom: none;
+  text-decoration: none;
+  flex: 1;
+  max-width: 18rem;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+.guide-nav-card:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent-muted);
+}
+.nav-dir {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-accent-text);
+}
+.nav-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  line-height: 1.4;
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .guide-header h1 { font-size: var(--font-size-3xl); }
+  .guide-lede { font-size: var(--font-size-base); }
+  .guide-prev-next { flex-direction: column; }
+  .guide-nav-card { max-width: 100%; }
+  .diagram { padding: 1rem 0.5rem; }
+}
+</style>

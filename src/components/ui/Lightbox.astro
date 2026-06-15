@@ -1,0 +1,68 @@
+---
+// Site-wide image lightbox: click any content image (inside <main>, not a link)
+// to open it enlarged; click the image to toggle full-width zoom, click outside
+// or press Escape to close. Markup lives here; styles in global.css.
+---
+
+<div id="lightbox" class="lightbox" hidden role="dialog" aria-modal="true" aria-label="Enlarged image">
+  <button class="lightbox-close" aria-label="Close enlarged image">&times;</button>
+  <figure class="lightbox-stage">
+    <img alt="" />
+    <figcaption></figcaption>
+  </figure>
+</div>
+
+<script>
+  const lb = document.getElementById('lightbox') as HTMLElement | null;
+
+  if (lb) {
+    const lbImg = lb.querySelector('img') as HTMLImageElement;
+    const lbCap = lb.querySelector('figcaption') as HTMLElement;
+
+    const close = () => {
+      lb.hidden = true;
+      lb.classList.remove('zoomed');
+      document.documentElement.classList.remove('lightbox-open');
+    };
+
+    const open = (src: string, alt: string, caption: string) => {
+      lbImg.src = src;
+      lbImg.alt = alt;
+      lbCap.textContent = caption;
+      lbCap.hidden = !caption;
+      lb.hidden = false;
+      lb.scrollTop = 0;
+      document.documentElement.classList.add('lightbox-open');
+    };
+
+    // Mark eligible images (content images that aren't links) as zoomable.
+    document.querySelectorAll<HTMLImageElement>('main img').forEach((img) => {
+      if (!img.closest('a')) img.classList.add('zoomable');
+    });
+
+    document.addEventListener('click', (e) => {
+      const t = e.target as HTMLElement;
+
+      if (!lb.hidden) {
+        if (t === lbImg) {
+          // toggle fit <-> full-width zoom
+          lb.classList.toggle('zoomed');
+          lb.scrollTop = 0;
+        } else {
+          close(); // overlay, close button, caption — anything else closes
+        }
+        return;
+      }
+
+      if (t instanceof HTMLImageElement && t.classList.contains('zoomable')) {
+        const fig = t.closest('figure');
+        const caption = fig?.querySelector('figcaption')?.textContent?.trim() ?? t.alt;
+        open(t.currentSrc || t.src, t.alt, caption);
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !lb.hidden) close();
+    });
+  }
+</script>

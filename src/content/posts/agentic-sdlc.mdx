@@ -1,0 +1,106 @@
+---
+title: "My Agentic SDLC: Running AI Agents Like an Engineering Org"
+description: "An agentic workflow that runs like a real SDLC: a locked spec, scope triage, smoke-tested agents, gated permissions, and an auditable, traceable trail."
+pubDate: 2026-06-02
+category: "agents"
+tags: ["agentic", "multi-agent", "SDLC", "Claude Code", "context engineering", "software engineering"]
+readTime: 5
+featured: true
+draft: false
+repoUrl: "https://github.com/euzun/agentic-sdlc"
+---
+
+<p class="standfirst">The lesson from handing a real project to a team of AI agents wasn’t about the agents. It was that everything good about a software organization (roadmapping, design review, cross-functional teams, QA, audit trails, blameless post-mortems) can be rebuilt as structure, so the things humans tend to overlook or rush past get caught instead. The agents are just the staff. The plan is what does the work.</p>
+
+<div class="tldr">
+
+### TL;DR
+
+An autonomous agent loop with broad permissions fails predictably: it makes a confident, scope-defining decision wrong, then compounds it for hours. The fix isn’t smarter agents or bigger models — it’s structure you’d recognize from a well-run engineering org: a spec locked one decision at a time, a scope-triage gate, smoke-tested agents, adversarial maker/critic pairs, stop-by-default permissions, disciplined git, and contexts that never hit their limit. Everything is logged, so failures trace to a root cause instead of an argument. The deliverable is a reusable bootstrap prompt plus a self-detecting skill: point it at a fresh repo and run.
+
+</div>
+
+*This is the 5-minute version. The full deep dive — all the design reasoning, the war stories, and the complete figure set — lives in the [agentic-sdlc repo](https://github.com/euzun/agentic-sdlc), where the bootstrap prompt and skill are also published.*
+
+I wanted to take a project from zero to one through a genuinely good development lifecycle, with a multi-agent system in Claude Code doing the heavy lifting — and to build that workflow well enough to reuse on the next project, and the one after that. The test substrate is a 2015-era research codebase of mine ([context in the repo](https://github.com/euzun/agentic-sdlc#readme)), but it could have been almost anything; the pipeline is the point. The design accreted from day-to-day AI-assisted development, and in hindsight it leans hardest on security-engineer reflexes: least privilege, separation of duties, adversarial validation, fail-closed defaults — how you reason about any system you don’t fully trust.
+
+## The Failure Mode of Full Autonomy
+
+The seductive pitch for agentic coding is autonomy: describe the goal, grant permissions, walk away. But broad authority plus no checkpoints plus a feedback loop is the recipe for a runaway in any system, and agents are no exception: eventually one makes a confidently wrong call — a misread of old code, a wrong scope assumption, a test “fixed” by weakening its assertion — and builds on it for an hour before you notice. A wrong architectural call found after implementation costs orders of magnitude more than the same call caught at design time. So the whole design reduces to one sentence:
+
+> Front-load every decision to the cheapest possible moment to be wrong, and make “wrong” cheap to reverse.
+
+<figure class="fig-card">
+  <img src="/images/posts/agentic-sdlc/fig7-end-to-end-flow.svg" alt="End-to-end flow of the agentic build pipeline, from intake interview through planning gates to sequential sub-plan execution and the terminal human gate to main." />
+  <figcaption><span class="fig-num">Figure 1.</span> The pipeline end to end. The warm band is the planning front-end: cheap, conversational, dense with human gates (⚖ decision, 🔒 lock, ✋ hard-stop), producing a fully locked spec. The teal band is the execution engine: agents provisioned and smoke-tested, then sub-plans run one at a time, each in fresh context, merged into <code>final-signoff</code> and promoted to a protected <code>main</code> only at the terminal gate.</figcaption>
+</figure>
+
+## Point-by-Point Spec Locking
+
+The first artifact is not code. It’s `SPEC.md`, the single source of truth every plan, agent, and test derives from. The part that makes it work is *how* it’s built: not “draft a document, approve it” — that invites skim-and-rubber-stamp — but point by point. The agent proposes one section, we discuss, I explicitly say *lock*, and only then does the next point open. Silence is never agreement. Locked points are append-only; reopening one is itself a gated action that must announce which downstream points depend on it. The wrong assumption surfaces while it’s still a sentence, not after it’s load-bearing in code.
+
+## Viability Triage
+
+Before the scope points lock, a **viability agent** runs a novelty check, an impact pass, and a cost estimate — because if the thing you believe is novel was quietly released last year, you want to know *before* you spend an agent-hour building it. Its output is a **tiered advisory** mapping realistic scopes to their cost, down to a floor tier that says “not worth doing at any size.” The human picks a tier, kills, or pivots. The rule that matters most: **the tier sets scope, never quality.** Whatever is in scope gets the full locked plan, audit, test-first build, and review. A wrong tier call costs you scope, which is recoverable — never craftsmanship, which isn’t.
+
+<figure class="fig-card">
+  <img src="/images/posts/agentic-sdlc/fig3-viability-tiers.svg" alt="Tiered viability advisory mapping outcomes to effort, with a floor tier of 'not worth it'. The human decides." />
+  <figcaption><span class="fig-num">Figure 2.</span> The viability agent maps realistic <em>scopes</em> to their cost, including a floor tier that says “don’t.” It <em>advises</em>; the human <em>decides</em>.</figcaption>
+</figure>
+
+## Smoke-Tested Agent Creation
+
+The workflow provisions its agents from the project’s own context: a Python project gets a Python architect, auditor, implementer, and reviewer, instantiated from one parameterized template with the stack as its variable — and if the spec declares a specialized surface (cryptography, a security boundary, a hot kernel), a subject-matter reviewer signs off on that part independently. Staffing is the orchestrator’s job, not the planner’s: a maker choosing its own critics is a conflict of interest. Then the differentiator: **every freshly provisioned agent gets a trivial canned task, and the orchestrator verifies it responds in the expected shape before any real work depends on it.** Fail loud at staffing time, not silent and deep in the build.
+
+## The Adversarial Build Cycle
+
+Each sub-plan runs on one principle: the agent that produces work is never the only agent that judges it. A **planner** writes the implementation plan; an **auditor** attacks it; they converge, capped at two rounds — uncapped adversarial loops are how these systems burn tokens forever. An **implementer** builds exactly the agreed plan; a **reviewer** attacks the result, also capped. The work is test-first, and the reviewer is explicitly mandated to hunt *test theater* — assertions weakened or vacuous — with red-then-green visible in git history. On non-convergence the cycle doesn’t silently pick a winner: it stops and escalates with both positions written out for me to adjudicate.
+
+<figure class="fig-card">
+  <img src="/images/posts/agentic-sdlc/fig4-adversarial-cycle.svg" alt="The per-sub-plan adversarial cycle: plan, audit, agree (capped), implement, review, agree (capped), then merge." />
+  <figcaption><span class="fig-num">Figure 3.</span> The per-sub-plan cycle: producer and critic are different agents, both agreement steps are capped, and non-convergence escalates rather than loops. Heavy “method-bearing” sub-plans run the full ceremony; mechanical plumbing runs a lighter <em>plan → implement → review</em>.</figcaption>
+</figure>
+
+## Permission Manifest and Git Discipline
+
+An early discovery step produces a **permission manifest**: every class of action (edits, test runs, installs, commits, merges) classified as *autonomous*, *log-and-continue*, or *hard-stop*. I approve it once; thereafter agents check the manifest instead of pinging me. The load-bearing rule: **an action not in the manifest defaults to stop-and-ask.** Git makes mistakes recoverable: `main` is protected, a `final-signoff` branch integrates the work, each sub-plan gets its own branch merged with `--no-ff`, and the old reference codebase is mounted read-only outside the working tree. Together with an append-only worklog, that’s a complete audit trail — post-mortems trace to the commit and the decision, not to an argument.
+
+## Context Management
+
+The silent killer of long agentic runs: when a context window fills, it auto-compacts, and that compression can drop the one load-bearing decision you needed three sub-plans later. The replacement principle is **never reach the limit**. Each sub-plan starts in a fresh context with a curated brief, and its first mandatory action is to ingest the full durable state: the append-only worklog, the spec, the git history. Those artifacts are compact by design, so reading all of them is cheap — fresh context plus complete grounding, with no path to the compaction cliff.
+
+## Model Tiering
+
+Most calls in a run are mundane — reading a PDF, a quick search, scaffolding a test — and spending frontier-model rates on them is assigning your principal engineer to photocopying. So model and effort are tiered per task, recursively: agents spawn cheap, fast helpers for grunt work and hold the heavyweight configuration for judgment — core logic, design decisions, adversarial review. It’s most of the cost control. One caveat: a cheap model can *scaffold* a test, but verifying its assertions actually assert something stays with the review tier.
+
+## Reusable Artifacts: Bootstrap Prompt + Skill
+
+The design crystallized into two artifacts, both published in the repo. A project-agnostic [**bootstrap prompt**](https://github.com/euzun/agentic-sdlc/blob/main/orchestration-prompt.md) that *interviews* you — name, stack, reference material, ambition — then drafts the spec, runs triage, staffs and smoke-tests the agents, and stands up the orchestrator. And a [**self-detecting skill**](https://github.com/euzun/agentic-sdlc/blob/main/.claude/skills/agentic-build-orchestrator/SKILL.md) that inspects the repo, classifies its situation (starting fresh, resuming after planning, resuming mid-execution), reports its diagnosis with evidence, and waits for your “go.” Picking the wrong mode is the expensive failure; detection removes the choice.
+
+<div class="runbox">
+  <span class="tag">How it runs · start to finish</span>
+  <pre>{`# What a user does, start to finish:
+.claude/skills/agentic-build-orchestrator/   # the skill
+orchestration-prompt.md                       # the workflow spec
+
+# then, in the repo:
+> run the orchestrator
+
+# → skill detects BOOTSTRAP / START / RESUME,
+#   shows its reasoning, waits for your "go",
+#   and runs the gated workflow from there.`}</pre>
+</div>
+
+## Limitations
+
+None of this makes the agents themselves reliable — they still hallucinate, and a confident wrong answer inside a locked plan is still wrong; the structure just gives you more places to catch it. A bad spec produces a faithfully-built bad product. And the apparatus is overhead: for a small script, the gates cost more than they save. The honest claim is narrow: this turns a class of expensive, late, silent failures into cheap, early, loud ones.
+
+## What’s Next
+
+Next, I run it and report the numbers: the viability agent’s up-front estimates next to the actual cost and outcomes, drawn from the telemetry, commit history, and worklog the run produces. The bootstrap prompt and the skill are already in the [repo](https://github.com/euzun/agentic-sdlc); the generated orchestrator and sub-plans from my own run will join them. The agents are commodity; the models will keep improving on their own. The plan, the audit, the triage gates, and the verified staffing are what you actually build.
+
+*Next post: the evaluation, and the results.*
+
+<div class="post-endnote">
+  Everything here is my own. None of my current or prior employers is responsible for, or has any ownership of, this content. I used an AI collaborator for editorial help: grammar, section placement, and turning my hand-drawn or textually described diagrams into SVG figures. The diagrams, and the idea, process, and content of this post, are free to reuse with attribution.
+</div>

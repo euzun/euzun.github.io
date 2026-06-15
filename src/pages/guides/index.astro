@@ -1,0 +1,158 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { getGuidePages } from '../../lib/guides';
+import { GUIDES_REPO } from '../../lib/constants';
+
+const metas = (await getCollection('guideMeta')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+const guides = await Promise.all(
+  metas.map(async (m) => {
+    const pages = await getGuidePages(m.data.slug);
+    const sectionCount = new Set(pages.map((p) => p.sectionDir)).size;
+    return {
+      ...m.data,
+      pageCount: pages.length,
+      sectionCount,
+      href: `/guides/${m.data.slug}`,
+    };
+  }),
+);
+---
+
+<BaseLayout
+  title="Guides"
+  description="Short, beginner-friendly field guides to security, cryptography, and systems topics."
+>
+  <div class="guides-hub">
+    <header class="guides-hub-header">
+      <h1>Guides</h1>
+      <p class="guides-hub-lede">
+        Short, beginner-friendly field guides to security, cryptography, and
+        systems topics — a clear, practical reference for anyone learning the
+        material or teaching it. Source lives on GitHub; if a guide helps you, a
+        star is appreciated.
+      </p>
+      <a class="guides-star-btn" href={GUIDES_REPO} target="_blank" rel="noopener">
+        <span aria-hidden="true">★</span> Star on GitHub
+      </a>
+    </header>
+
+    <ul class="guides-grid">
+      {guides.map((g) => (
+        <li>
+          <a href={g.href} class="guide-card">
+            <span class="guide-card-eyebrow">{g.level} · {g.pageCount} pages</span>
+            <h2>{g.title}</h2>
+            <p>{g.description}</p>
+            <span class="guide-card-meta">{g.sectionCount} sections →</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</BaseLayout>
+
+<style>
+  .guides-hub { max-width: var(--measure-wide); }
+  .guides-hub-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .guides-hub-header h1 {
+    font-family: var(--font-display);
+    font-size: var(--font-size-4xl);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin-bottom: 0.75rem;
+    color: var(--color-text);
+  }
+  .guides-hub-lede {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-muted);
+    max-width: 62ch;
+    margin: 0;
+  }
+  .guides-hub-lede a {
+    color: var(--color-accent-text);
+    border-bottom: 1px solid var(--color-accent-muted);
+  }
+  .guides-star-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 1.25rem;
+    padding: 0.5rem 1rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-text);
+    text-decoration: none;
+    transition: border-color var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+  }
+  .guides-star-btn:hover {
+    border-color: var(--color-accent);
+    background: var(--color-accent-muted);
+    color: var(--color-accent-text);
+  }
+  .guides-star-btn span { color: oklch(0.78 0.16 80); }
+
+  .guides-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  }
+  .guide-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    height: 100%;
+    padding: 1.5rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    border-bottom: 1px solid var(--color-border);
+    text-decoration: none;
+    transition: border-color var(--transition-fast), background var(--transition-fast);
+  }
+  .guide-card:hover {
+    border-color: var(--color-accent);
+    background: var(--color-accent-muted);
+  }
+  .guide-card-eyebrow {
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent-text);
+  }
+  .guide-card h2 {
+    font-family: var(--font-display);
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
+  }
+  .guide-card p {
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-text-muted);
+    margin: 0;
+    flex: 1;
+  }
+  .guide-card-meta {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-accent-text);
+    margin-top: 0.25rem;
+  }
+</style>

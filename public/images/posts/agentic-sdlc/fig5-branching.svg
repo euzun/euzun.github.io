@@ -1,0 +1,69 @@
+<svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Git branching model: protected main, a final-signoff integration branch, and per-sub-plan branches merging with no-ff. Permission tiers annotate each operation.">
+<style>
+  .svg-title{font-family:'Inter','Optima','Gill Sans',sans-serif;font-weight:600;}
+  .svg-label{font-family:'Inter','Optima','Gill Sans',sans-serif;}
+  .svg-mono{font-family:'JetBrains Mono','SFMono-Regular',ui-monospace,Menlo,monospace;}
+</style>
+
+        <defs>
+          <marker id="arm" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
+            <path d="M0,0 L7,4 L0,8 Z" fill="#6b6456"/>
+          </marker>
+        </defs>
+
+        <!-- main line -->
+        <line x1="40" y1="56" x2="680" y2="56" stroke="#2f5d3a" stroke-width="3"/>
+        <text x="40" y="42" class="svg-mono" font-size="12" fill="#2f5d3a" font-weight="600">main</text>
+        <text x="120" y="42" class="svg-label" font-size="10" fill="#9a9484" font-style="italic">protected · no direct commits · never force-push</text>
+        <circle cx="60" cy="56" r="5" fill="#2f5d3a"/>
+        <circle cx="640" cy="56" r="7" fill="#e4f0e6" stroke="#2f5d3a" stroke-width="2"/>
+        <text x="640" y="34" text-anchor="middle" class="svg-label" font-size="10" fill="#7c2d2d">✋ terminal gate</text>
+
+        <!-- final-signoff line -->
+        <line x1="40" y1="140" x2="680" y2="140" stroke="#8a6d1f" stroke-width="2.5"/>
+        <text x="40" y="160" class="svg-mono" font-size="12" fill="#8a6d1f" font-weight="600">final-signoff</text>
+        <circle cx="60" cy="140" r="4.5" fill="#8a6d1f"/>
+        <!-- merge commits on final-signoff -->
+        <circle cx="250" cy="140" r="6" fill="#fff" stroke="#8a6d1f" stroke-width="2"/>
+        <circle cx="430" cy="140" r="6" fill="#fff" stroke="#8a6d1f" stroke-width="2"/>
+        <circle cx="610" cy="140" r="6" fill="#fff" stroke="#8a6d1f" stroke-width="2"/>
+
+        <!-- promotion arrow up to main -->
+        <path d="M610,134 C640,110 620,80 638,64" stroke="#6b6456" stroke-width="1.6" fill="none" marker-end="url(#arm)"/>
+
+        <!-- sub-plan branches -->
+        <g>
+          <!-- subplan 01 -->
+          <path d="M150,140 C175,140 175,220 200,220" stroke="#7c2d2d" stroke-width="1.8" fill="none"/>
+          <line x1="200" y1="220" x2="240" y2="220" stroke="#7c2d2d" stroke-width="1.8"/>
+          <circle cx="210" cy="220" r="3.5" fill="#7c2d2d"/><circle cx="228" cy="220" r="3.5" fill="#7c2d2d"/>
+          <path d="M240,220 C260,220 240,140 250,140" stroke="#7c2d2d" stroke-width="1.8" fill="none" marker-end="url(#arm)"/>
+          <text x="150" y="244" class="svg-mono" font-size="10" fill="#7c2d2d">subplan/01-…</text>
+
+          <!-- subplan 02 -->
+          <path d="M330,140 C355,140 355,220 380,220" stroke="#7c2d2d" stroke-width="1.8" fill="none"/>
+          <line x1="380" y1="220" x2="420" y2="220" stroke="#7c2d2d" stroke-width="1.8"/>
+          <circle cx="390" cy="220" r="3.5" fill="#7c2d2d"/><circle cx="408" cy="220" r="3.5" fill="#7c2d2d"/>
+          <path d="M420,220 C440,220 420,140 430,140" stroke="#7c2d2d" stroke-width="1.8" fill="none" marker-end="url(#arm)"/>
+          <text x="330" y="244" class="svg-mono" font-size="10" fill="#7c2d2d">subplan/02-…</text>
+
+          <!-- subplan 03 -->
+          <path d="M510,140 C535,140 535,220 560,220" stroke="#7c2d2d" stroke-width="1.8" fill="none"/>
+          <line x1="560" y1="220" x2="600" y2="220" stroke="#7c2d2d" stroke-width="1.8"/>
+          <circle cx="570" cy="220" r="3.5" fill="#7c2d2d"/><circle cx="588" cy="220" r="3.5" fill="#7c2d2d"/>
+          <path d="M600,220 C620,220 600,140 610,140" stroke="#7c2d2d" stroke-width="1.8" fill="none" marker-end="url(#arm)"/>
+          <text x="510" y="244" class="svg-mono" font-size="10" fill="#7c2d2d">subplan/03-…</text>
+        </g>
+
+        <text x="265" y="138" class="svg-label" font-size="9" fill="#8a6d1f" transform="rotate(0)">--no-ff</text>
+
+        <!-- permission legend -->
+        <g class="svg-label" font-size="10.5">
+          <rect x="40" y="262" width="14" height="10" rx="2" fill="#fff" stroke="#7c2d2d"/>
+          <text x="60" y="271" fill="#3d3d3d">commit on sub-branch = <tspan fill="#2f5d3a">autonomous</tspan></text>
+          <rect x="300" y="262" width="14" height="10" rx="2" fill="#fff" stroke="#8a6d1f"/>
+          <text x="320" y="271" fill="#3d3d3d">merge → final-signoff = <tspan fill="#8a6d1f">gated (heavy)</tspan></text>
+          <rect x="560" y="262" width="14" height="10" rx="2" fill="#e4f0e6"/>
+          <text x="580" y="271" fill="#3d3d3d">→ main = <tspan fill="#7c2d2d">always stop</tspan></text>
+        </g>
+      </svg>

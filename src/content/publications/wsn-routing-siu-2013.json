@@ -1,0 +1,39 @@
+{
+  "id": "wsn-routing-siu-2013",
+  "title": "Network lifetime maximization and localized routing tradeoff in wireless sensor networks",
+  "authors": [
+    {
+      "name": "E. Uzun",
+      "isErkam": true
+    },
+    {
+      "name": "A. Aksac",
+      "isErkam": false
+    },
+    {
+      "name": "O. Ozturk",
+      "isErkam": false
+    },
+    {
+      "name": "H. Kiziloz",
+      "isErkam": false
+    },
+    {
+      "name": "D. Incebacak",
+      "isErkam": false
+    },
+    {
+      "name": "B. Tavli",
+      "isErkam": false
+    },
+    {
+      "name": "K. Bicakci",
+      "isErkam": false
+    }
+  ],
+  "venue": "IEEE Signal Processing and Communications Applications Conference (SIU) (Turkish)",
+  "venueType": "conference",
+  "year": 2013,
+  "bibtex": "@inproceedings{wsn-routing-siu-2013,\n  author = {E. Uzun, A. Aksac, O. Ozturk, H. Kiziloz, D. Incebacak, B. Tavli, K. Bicakci},\n  title = {Network lifetime maximization and localized routing tradeoff in wireless sensor networks},\n  booktitle = {IEEE Signal Processing and Communications Applications Conference (SIU)},\n  year = {2013}\n}",
+  "url": "https://www.researchgate.net/publication/255964136_Network_Lifetime_Maximization_and_Localized_Routing_Tradeoff_in_Wireless_Sensor_Networks"
+}

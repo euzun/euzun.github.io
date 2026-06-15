@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SOCIAL_LINKS } from '../lib/constants';
+---
+
+<BaseLayout title="About · Erkam Uzun" description="Bio, education, expertise, and contact information.">
+  <article class="max-w-prose mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+    <h1>About</h1>
+
+    <div class="flex flex-col sm:flex-row gap-6 mb-8">
+      <img
+        src="/images/avatar.png"
+        alt="Erkam Uzun"
+        class="w-24 h-24 rounded-full object-cover flex-shrink-0"
+      />
+      <div>
+        <h2 class="text-2xl font-semibold mb-2">Erkam Uzun</h2>
+        <p class="text-lg text-text-muted mb-2">
+          Staff Software Engineer & Tech Lead, ID.me
+        </p>
+        <p class="text-sm text-text-subtle">Mountain View, CA</p>
+      </div>
+    </div>
+
+    <p>
+      I'm a software engineer specializing in authentication, identity verification, privacy-preserving
+      systems, and large-scale infrastructure. I've shipped foundational services at ID.me (billions
+      of monthly transactions) and TikTok (100M+ passkey users), and I hold a PhD in Computer Science
+      from Georgia Tech with research in cryptography and biometric security.
+    </p>
+
+    <p>
+      My work spans the full spectrum from applied cryptography (private set intersection, fully homomorphic
+      encryption, zero-knowledge proofs) to production systems engineering (microservices, API design,
+      observability) to emerging AI systems (agentic frameworks, multi-agent orchestration).
+    </p>
+
+    <h2>Current Role</h2>
+    <p>
+      At ID.me (2025–present), I architect the company's authentication and identity verification platform,
+      leading the re-platforming from monolithic Rails to Java microservices. I designed three foundational
+      services now powering org-wide authentication. I also built an agentic AI framework delivering 24×
+      productivity multiplier on new service development.
+    </p>
+
+    <h2>Education</h2>
+    <ul>
+      <li>
+        <strong>Ph.D. in Computer Science</strong>, Georgia Institute of Technology (2015–2021)
+        <br />
+        Advisor: Prof. Wenke Lee
+        <br />
+        Dissertation: Security and Privacy in Biometrics-Based Systems
+      </li>
+      <li>
+        <strong>M.Sc. in Computer Engineering</strong>, TOBB University of Economics and Technology
+        (2012–2014)
+        <br />
+        Thesis: Analysis and Tamper Detection of Audio Evidence
+      </li>
+      <li>
+        <strong>B.Sc. in Computer Engineering & Electrical Engineering</strong>, TOBB University
+        (2006–2011)
+      </li>
+    </ul>
+
+    <h2>Research Areas</h2>
+    <div class="flex flex-wrap gap-2 my-4">
+      {['Post-Quantum Cryptography', 'Private Set Intersection', 'FHE', 'MPC', 'ZKP', 'Biometric Authentication', 'FIDO2/WebAuthn', 'IAM at Scale', 'Agentic AI Systems'].map((area) => (
+        <span class="px-3 py-1 bg-accent-muted text-accent rounded-full text-sm font-medium">
+          {area}
+        </span>
+      ))}
+    </div>
+
+    <h2>Expertise Stack</h2>
+    <div class="grid grid-cols-2 gap-6 my-6">
+      <div>
+        <h3 class="font-semibold mb-2">Languages</h3>
+        <ul class="text-sm text-text-muted space-y-1">
+          <li>Java</li>
+          <li>Go</li>
+          <li>Python</li>
+          <li>Rust</li>
+          <li>TypeScript</li>
+          <li>Kotlin</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-semibold mb-2">Cryptography</h3>
+        <ul class="text-sm text-text-muted space-y-1">
+          <li>PSI, FHE, MPC</li>
+          <li>ZKP</li>
+          <li>Post-Quantum Crypto</li>
+          <li>FIDO2/WebAuthn</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-semibold mb-2">Cloud & Infra</h3>
+        <ul class="text-sm text-text-muted space-y-1">
+          <li>AWS, GCP</li>
+          <li>Kubernetes</li>
+          <li>Terraform</li>
+          <li>Vault, Consul, Nomad</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-semibold mb-2">Tools & Frameworks</h3>
+        <ul class="text-sm text-text-muted space-y-1">
+          <li>Spring Boot</li>
+          <li>Astro, React</li>
+          <li>Claude Code</li>
+          <li>Prometheus, Grafana</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>Profiles & Links</h2>
+    <ul>
+      <li>
+        <a href={SOCIAL_LINKS.scholar} target="_blank" rel="noopener noreferrer">
+          Google Scholar
+        </a>
+      </li>
+      <li>
+        <a href={SOCIAL_LINKS.github} target="_blank" rel="noopener noreferrer">
+          GitHub: /euzun
+        </a>
+      </li>
+      <li>
+        <a href={SOCIAL_LINKS.linkedin} target="_blank" rel="noopener noreferrer">
+          LinkedIn: /erkamuzun
+        </a>
+      </li>
+      <li>
+        Email: [name][lastname]@gmail.com
+      </li>
+    </ul>
+  </article>
+</BaseLayout>

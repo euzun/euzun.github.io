@@ -1,0 +1,20 @@
+{
+  "id": "jpgcarving-2015",
+  "title": "Carving Orphaned JPEG File Fragments",
+  "authors": [
+    {
+      "name": "E. Uzun",
+      "isErkam": true
+    },
+    {
+      "name": "H. T. Sencar",
+      "isErkam": false
+    }
+  ],
+  "venue": "IEEE Transactions on Information Forensics and Security",
+  "venueType": "journal",
+  "year": 2015,
+  "url": "https://ieeexplore.ieee.org/document/7067355",
+  "projectSlug": "jpgscraper",
+  "bibtex": "@article{jpgcarving-2015,\n  author = {E. Uzun, H. T. Sencar},\n  title = {Carving Orphaned JPEG File Fragments},\n  booktitle = {IEEE Transactions on Information Forensics and Security},\n  year = {2015}\n}"
+}

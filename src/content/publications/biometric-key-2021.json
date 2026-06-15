@@ -1,0 +1,33 @@
+{
+  "id": "biometric-key-2021",
+  "title": "Cryptographic Key Derivation from Biometric Inferences for Remote Authentication",
+  "authors": [
+    {
+      "name": "E. Uzun",
+      "isErkam": true
+    },
+    {
+      "name": "C. Yagemann",
+      "isErkam": false
+    },
+    {
+      "name": "S. Chung",
+      "isErkam": false
+    },
+    {
+      "name": "V. Kolesnikov",
+      "isErkam": false
+    },
+    {
+      "name": "W. Lee",
+      "isErkam": false
+    }
+  ],
+  "venue": "ACM AsiaCCS",
+  "venueType": "conference",
+  "year": 2021,
+  "url": "https://dl.acm.org/doi/10.1145/3433210.3437512",
+  "selected": true,
+  "projectSlug": "privacy-biometric-auth",
+  "bibtex": "@inproceedings{biometric-key-2021,\n  author = {E. Uzun, C. Yagemann, S. Chung, V. Kolesnikov, W. Lee},\n  title = {Cryptographic Key Derivation from Biometric Inferences for Remote Authentication},\n  booktitle = {ACM AsiaCCS},\n  year = {2021}\n}"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "traffic-sim-2012",
+  "title": "A Real Time Traffic Simulator Utilizing an Adaptive Fuzzy Inference Mechanism by Tuning Fuzzy Parameters",
+  "authors": [
+    {
+      "name": "A. Aksac",
+      "isErkam": false
+    },
+    {
+      "name": "E. Uzun",
+      "isErkam": true
+    },
+    {
+      "name": "T. Ozyer",
+      "isErkam": false
+    }
+  ],
+  "venue": "Applied Intelligence (Springer)",
+  "venueType": "journal",
+  "year": 2012,
+  "url": "https://link.springer.com/article/10.1007/s10489-011-0290-3",
+  "bibtex": "@article{traffic-sim-2012,\n  author = {A. Aksac, E. Uzun, T. Ozyer},\n  title = {A Real Time Traffic Simulator Utilizing an Adaptive Fuzzy Inference Mechanism by Tuning Fuzzy Parameters},\n  booktitle = {Applied Intelligence (Springer)},\n  year = {2012}\n}"
+}

@@ -1,0 +1,57 @@
+---
+name: "Live Biometric Verification (rtCaptcha)"
+shortDescription: "A liveness-detection system that defends facial/voice authentication against MLaaS synthesis attacks by deriving security from Captcha strength rather than biometric liveness."
+role: "Researcher"
+org: "Georgia Tech"
+tech: ["CAPTCHA", "Computer Vision", "Speech Recognition", "Challenge-Response", "Android"]
+yearStart: 2017
+yearEnd: 2018
+hero: "/images/projects/rtcaptcha-banner.svg"
+icon: "/images/projects/rtcaptcha-icon.svg"
+heroAlt: "Live Biometric Verification — rtCaptcha"
+links:
+  paper: "https://www.ndss-symposium.org/wp-content/uploads/2018/02/ndss2018_01B-4_Uzun_paper.pdf"
+videos:
+  - label: "rtCaptcha presentation at NDSS'18"
+    url: "https://www.youtube.com/watch?v=Knn5V4d_0DA"
+resources:
+  - label: "NDSS 2018 paper (PDF)"
+    url: "https://www.ndss-symposium.org/wp-content/uploads/2018/02/ndss2018_01B-4_Uzun_paper.pdf"
+  - label: "Slides — NDSS'18"
+    url: "https://sites.gatech.edu/euzun/files/2020/10/euzun_presentation_NDSS18.pdf"
+  - label: "Poster — SOUPS'18"
+    url: "https://sites.gatech.edu/euzun/files/2020/10/euzunSOUPS18.pdf"
+  - label: "Cybersecurity Lecture Series talk (video)"
+    url: "https://mediaspace.gatech.edu/media/Erkam+Uzun+-+rtCaptchaA+A+Real-Time+CAPTCHA+Based+Liveness+Detection+System/1_f502y0ed"
+  - label: "HDIAC Journal article"
+    url: "https://hdiac.dtic.mil/articles/defending-against-biometric-mimicry-real-time-captcha-based-facial-and-voice-recognition/"
+  - label: "Patent — rtCaptcha liveness detection (US20200097643A1)"
+    url: "https://patents.google.com/patent/US20200097643A1/en?inventor=Erkam+Uzun"
+relatedPublications: ["rtcaptcha-2018", "biometric-mimicry-2018"]
+---
+
+Facial and voice-based authentication is increasingly popular with services like
+MasterCard and AliPay, but many publicly available recognition systems are
+vulnerable to attacks. Recent advances in face and voice modeling enable
+adversaries to create convincing synthetic media using minimal victim data.
+
+![rtCaptcha live demo](/images/projects/rtcaptcha.gif)
+
+The **Real-Time Captcha (rtCaptcha)** system addresses this vulnerability by
+requiring users to solve a Captcha and record a video selfie while announcing the
+answer. Rather than trying to distinguish real from synthesized biometrics,
+security derives from **Captcha strength**. User studies demonstrated that
+attackers would need to solve Captchas in under 2 seconds to appear human — an
+unrealistic requirement for current attack capabilities.
+
+The work proved the vulnerability of major MLaaS systems (e.g., Azure Cognitive
+Services, Amazon Rekognition) against attacks ranging from crude copy-paste to
+deep-learning synthesis, and was implemented as an Android application for user
+studies and security analysis.
+
+**Media coverage.** Featured by
+[TechCrunch](https://techcrunch.com/2018/02/20/think-fast-this-system-watches-you-answer-questions-to-make-sure-youre-human/),
+[MIT Technology Review](https://www.heise.de/select/tr/2018/5/1525057281299245),
+[GovCIO Media](https://govciomedia.com/captcha-goes-real-time-to-fool-machine-learning/),
+[ScienceDaily](https://www.sciencedaily.com/releases/2018/02/180219141219.htm), and
+[Security Advisor ME](https://www.tahawultech.com/features/biometrics-security-bane-or-boon/).

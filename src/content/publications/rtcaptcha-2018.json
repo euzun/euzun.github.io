@@ -1,0 +1,29 @@
+{
+  "id": "rtcaptcha-2018",
+  "title": "rtCaptcha: A Real-Time Captcha Based Liveness Detection System",
+  "authors": [
+    {
+      "name": "E. Uzun",
+      "isErkam": true
+    },
+    {
+      "name": "Simon P. Chung",
+      "isErkam": false
+    },
+    {
+      "name": "Irfan Essa",
+      "isErkam": false
+    },
+    {
+      "name": "Wenke Lee",
+      "isErkam": false
+    }
+  ],
+  "venue": "NDSS",
+  "venueType": "conference",
+  "year": 2018,
+  "url": "https://www.ndss-symposium.org/wp-content/uploads/2018/02/ndss2018_01B-4_Uzun_paper.pdf",
+  "selected": true,
+  "projectSlug": "rtcaptcha",
+  "bibtex": "@inproceedings{rtcaptcha-2018,\n  author = {E. Uzun, Simon P. Chung, Irfan Essa, Wenke Lee},\n  title = {rtCaptcha: A Real-Time Captcha Based Liveness Detection System},\n  booktitle = {NDSS},\n  year = {2018}\n}"
+}

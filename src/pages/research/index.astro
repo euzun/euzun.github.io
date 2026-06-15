@@ -1,0 +1,155 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const publications = await getCollection('publications');
+
+// Categories, conference first
+const categories = [
+  { type: 'conference', label: 'Peer-Reviewed Conference Publications' },
+  { type: 'journal', label: 'Refereed Journal Articles' },
+  { type: 'workshop', label: 'Refereed Workshop Publications' },
+  { type: 'magazine', label: 'Refereed Magazine Articles' },
+] as const;
+
+const grouped = categories.map((c) => ({
+  ...c,
+  items: publications
+    .filter((p) => p.data.venueType === c.type)
+    .sort((a, b) => b.data.year - a.data.year),
+}));
+
+const theses = [
+  {
+    title: 'Security and Privacy in Biometrics-Based Systems',
+    degree: 'Ph.D. Dissertation',
+    org: 'Georgia Institute of Technology',
+    advisor: 'Wenke Lee',
+    year: 2021,
+    url: 'https://repository.gatech.edu/entities/publication/35396921-6496-4aa3-92b6-190506a4f9c9',
+  },
+  {
+    title: 'New techniques for preliminary analysis and tamper detection of audio evidence',
+    degree: 'M.Sc. Thesis (Turkish)',
+    org: 'TOBB University of Economics and Technology',
+    advisor: 'H. T. Sencar',
+    year: 2013,
+    url: 'https://www.researchgate.net/publication/318305530_New_techniques_for_preliminary_analysis_and_tamper_detection_of_audio_evidence',
+  },
+];
+---
+
+<BaseLayout
+  title="Publications · Erkam Uzun"
+  description="Peer-reviewed publications in security, cryptography, privacy, and forensics."
+>
+  <h1>Publications</h1>
+  <p class="lead">
+    Citations: <strong>530</strong> · h-index: <strong>12</strong> ·
+    <a href="https://scholar.google.com/citations?hl=en&user=4rKpDxoAAAAJ" target="_blank" rel="noopener noreferrer">Google Scholar</a>
+  </p>
+
+  {grouped.map((group) => (
+    <section class="cat">
+      <h2>{group.label}</h2>
+      <ol class="pub-list">
+        {group.items.map((pub) => (
+          <li class="pub-item">
+            <p class="pub-title">
+              {pub.data.url ? (
+                <a href={pub.data.url} target="_blank" rel="noopener noreferrer">{pub.data.title}</a>
+              ) : (
+                pub.data.title
+              )}
+            </p>
+            <p class="pub-authors">
+              {pub.data.authors.map((a, i) => (
+                <>{i > 0 && ', '}<span class={a.isErkam ? 'me' : ''}>{a.name}</span></>
+              ))}
+            </p>
+            <p class="pub-venue"><span class="venue-name">{pub.data.venue}</span>, {pub.data.year}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+  ))}
+
+  <section class="cat">
+    <h2>Theses &amp; Dissertations</h2>
+    <ol class="pub-list">
+      {theses.map((t) => (
+        <li class="pub-item">
+          <p class="pub-title">
+            <a href={t.url} target="_blank" rel="noopener noreferrer">{t.title}</a>
+          </p>
+          <p class="pub-authors"><span class="me">E. Uzun</span></p>
+          <p class="pub-venue">
+            <span class="venue-name">{t.degree}, {t.org}</span>, {t.year} · Advisor: {t.advisor}
+          </p>
+        </li>
+      ))}
+    </ol>
+  </section>
+</BaseLayout>
+
+<style>
+  .lead {
+    color: var(--color-text-muted);
+    margin-bottom: 1.25rem;
+  }
+  .cat {
+    margin-bottom: 0.5rem;
+  }
+  .pub-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: pub;
+  }
+  .pub-item {
+    position: relative;
+    padding: 0.8rem 0 0.8rem 2rem;
+    border-bottom: 1px solid var(--color-border);
+    counter-increment: pub;
+  }
+  .pub-item::before {
+    content: counter(pub) '.';
+    position: absolute;
+    left: 0;
+    top: 0.8rem;
+    color: var(--color-text-subtle);
+    font-size: var(--font-size-sm);
+    font-variant-numeric: tabular-nums;
+  }
+  .pub-item:last-child {
+    border-bottom: none;
+  }
+  .pub-title {
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  .pub-title a {
+    color: var(--color-text);
+    border-bottom: none;
+  }
+  .pub-title a:hover {
+    color: var(--color-accent);
+  }
+  .pub-authors {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin-top: 0.2rem;
+  }
+  .pub-authors .me {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+  .pub-venue {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin-top: 0.15rem;
+  }
+  .venue-name {
+    font-style: italic;
+  }
+</style>

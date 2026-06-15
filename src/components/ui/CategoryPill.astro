@@ -1,0 +1,29 @@
+---
+type Category = 'research' | 'engineering' | 'agents' | 'crypto' | 'opinion' | 'talk' | 'award' | 'life';
+
+interface Props {
+  category: Category;
+}
+
+const { category } = Astro.props;
+
+const colorMap: Record<Category, { light: string; dark: string }> = {
+  research: { light: 'bg-accent-muted text-accent', dark: 'dark:bg-accent-muted dark:text-accent' },
+  engineering: { light: 'bg-emerald-50 text-emerald-700', dark: 'dark:bg-emerald-950 dark:text-emerald-400' },
+  agents: { light: 'bg-violet-50 text-violet-700', dark: 'dark:bg-violet-950 dark:text-violet-400' },
+  crypto: { light: 'bg-amber-50 text-amber-700', dark: 'dark:bg-amber-950 dark:text-amber-400' },
+  opinion: { light: 'bg-sky-50 text-sky-700', dark: 'dark:bg-sky-950 dark:text-sky-400' },
+  talk: { light: 'bg-rose-50 text-rose-700', dark: 'dark:bg-rose-950 dark:text-rose-400' },
+  award: { light: 'bg-yellow-50 text-yellow-700', dark: 'dark:bg-yellow-950 dark:text-yellow-400' },
+  life: { light: 'bg-gray-100 text-gray-600', dark: 'dark:bg-gray-800 dark:text-gray-400' },
+};
+
+const { light, dark } = colorMap[category];
+const label = category.charAt(0).toUpperCase() + category.slice(1);
+---
+
+<span
+  class={`inline-block px-2 py-1 rounded-md text-xs font-medium transition-colors ${light} ${dark}`}
+>
+  {label}
+</span>

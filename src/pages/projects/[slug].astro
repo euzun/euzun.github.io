@@ -1,0 +1,285 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+const d = project.data;
+
+// Resolve related publications (if any) for clickable links
+const allPubs = await getCollection('publications');
+const related = (d.relatedPublications ?? [])
+  .map((id) => allPubs.find((p) => p.data.id === id))
+  .filter(Boolean);
+
+// Convert a YouTube watch/share URL to an embeddable URL
+const ytEmbed = (url: string) => {
+  const m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
+  return m ? `https://www.youtube.com/embed/${m[1]}` : null;
+};
+---
+
+<BaseLayout title={`${d.name} · Erkam Uzun`} description={d.shortDescription}>
+  <p class="back"><a href="/projects">← All projects</a></p>
+  <h1 class="sr-only">{d.name}</h1>
+  {d.hero && (
+    <img class="hero hero-title" src={d.hero} alt={d.heroAlt ?? d.name} loading="lazy" />
+  )}
+  <p class="meta">{d.role} · {d.org} · {d.yearStart}{d.yearEnd ? `–${d.yearEnd}` : ''}</p>
+
+  <div class="tags">
+    {d.tech.map((t) => <span class="tag">{t}</span>)}
+  </div>
+
+  {(d.links.paper || d.links.code || d.links.demo || d.links.post) && (
+    <div class="links">
+      {d.links.paper && <a href={d.links.paper} target="_blank" rel="noopener noreferrer">Paper ↗</a>}
+      {d.links.code && <a href={d.links.code} target="_blank" rel="noopener noreferrer">Code ↗</a>}
+      {d.links.demo && <a href={d.links.demo} target="_blank" rel="noopener noreferrer">Demo ↗</a>}
+      {d.links.post && <a href={d.links.post}>Blog post →</a>}
+    </div>
+  )}
+
+  <div class="prose">
+    <Content />
+  </div>
+
+  {d.placeholder && (
+    <p class="placeholder-note">
+      A detailed write-up for this project is coming soon. Related publications and
+      resources are listed below.
+    </p>
+  )}
+
+  {d.videos && d.videos.length > 0 && (
+    <section class="videos">
+      <h2>Videos</h2>
+      {d.videos.map((v) => {
+        const embed = ytEmbed(v.url);
+        return embed ? (
+          <figure class="video">
+            <div class="video-frame">
+              <iframe
+                src={embed}
+                title={v.label}
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <figcaption>
+              <span class="video-label">{v.label}</span>
+              {v.caption && <span class="video-caption">{v.caption}</span>}
+            </figcaption>
+          </figure>
+        ) : (
+          <p><a href={v.url} target="_blank" rel="noopener noreferrer">{v.label} ↗</a></p>
+        );
+      })}
+      {d.videos.filter((v) => v.diagram).map((v) => (
+        <figure class="video-diagram-fig">
+          <img src={v.diagram} alt={`${v.label} — pipeline diagram`} loading="lazy" />
+          {v.diagramCaption && <figcaption class="video-caption">{v.diagramCaption}</figcaption>}
+        </figure>
+      ))}
+    </section>
+  )}
+
+  {related.length > 0 && (
+    <section class="related">
+      <h2>Related publications</h2>
+      <ul>
+        {related.map((p) => (
+          <li>
+            {p!.data.url ? (
+              <a href={p!.data.url} target="_blank" rel="noopener noreferrer">{p!.data.title}</a>
+            ) : (
+              p!.data.title
+            )}
+            <span class="rel-venue"> — {p!.data.venue}, {p!.data.year}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  {d.resources && d.resources.length > 0 && (
+    <section class="resources">
+      <h2>Resources</h2>
+      <ul>
+        {d.resources.map((r) => (
+          <li><a href={r.url} target="_blank" rel="noopener noreferrer">{r.label} ↗</a></li>
+        ))}
+      </ul>
+    </section>
+  )}
+</BaseLayout>
+
+<style>
+  .back {
+    margin-bottom: 1rem;
+  }
+  .back a {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    border-bottom: none;
+  }
+  .back a:hover {
+    color: var(--color-accent);
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .hero-title {
+    margin-top: 0.25rem;
+    margin-bottom: 1rem;
+  }
+  .meta {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+  }
+  .tag {
+    background: var(--color-surface-2);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--radius-sm);
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+  }
+  .links a {
+    border-bottom: none;
+  }
+  .hero {
+    display: block;
+    width: 100%;
+    max-width: var(--measure-prose);
+    height: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    margin-bottom: 1.5rem;
+    background: var(--color-surface);
+  }
+  .placeholder-note {
+    background: var(--color-surface);
+    border: 1px dashed var(--color-border-2);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.25rem;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    margin: 0.5rem 0 1.5rem;
+  }
+  .videos {
+    margin-top: 1.5rem;
+  }
+  .video {
+    margin: 0 0 1.25rem;
+    max-width: var(--measure-prose);
+  }
+  .video-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+  }
+  .video-frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .video figcaption {
+    margin-top: 0.5rem;
+  }
+  .video-label {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-text);
+  }
+  .video-caption {
+    display: block;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    line-height: 1.55;
+    margin-top: 0.25rem;
+  }
+  .video-diagram-fig {
+    margin: 0.5rem 0 1.5rem;
+    max-width: var(--measure-prose);
+  }
+  .video-diagram-fig img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+  .resources ul {
+    list-style: none;
+    padding: 0;
+  }
+  .resources li {
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--color-border);
+    font-weight: 500;
+    font-size: var(--font-size-sm);
+  }
+  .resources li a {
+    border-bottom: none;
+  }
+  .related {
+    margin-top: 2rem;
+  }
+  .related ul {
+    list-style: none;
+    padding: 0;
+  }
+  .related li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--color-border);
+    font-weight: 500;
+  }
+  .related li a {
+    border-bottom: none;
+  }
+  .rel-venue {
+    color: var(--color-text-muted);
+    font-weight: 400;
+    font-style: italic;
+    font-size: var(--font-size-sm);
+  }
+</style>

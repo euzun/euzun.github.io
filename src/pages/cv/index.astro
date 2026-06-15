@@ -1,0 +1,666 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const degrees = [
+  {
+    title: 'Ph.D. in Computer Science',
+    org: 'Georgia Institute of Technology',
+    years: '2015 – 2021',
+    detail: 'Dissertation: Security and Privacy in Biometrics-Based Systems. Advisor: Prof. Wenke Lee.',
+  },
+  {
+    title: 'M.Sc. in Computer Engineering',
+    org: 'TOBB University of Economics and Technology',
+    years: '2012 – 2014',
+    detail: 'Thesis: New techniques for preliminary analysis and tamper detection of audio evidence. Advisor: Prof. Husrev Taha Sencar.',
+  },
+  {
+    title: 'B.Sc. in Computer Engineering',
+    org: 'TOBB University of Economics and Technology',
+    years: '2006 – 2011',
+  },
+  {
+    title: 'B.Sc. in Electrical and Electronics Engineering',
+    org: 'TOBB University of Economics and Technology',
+    years: '2006 – 2011',
+  },
+];
+
+const academicAppointments = [
+  { role: 'Postdoctoral Fellow', org: 'Georgia Institute of Technology, US', years: '2021 – 2022' },
+  { role: 'Co-Founding Research Engineer', org: 'YouCert Inc., US', years: '2020 – 2022' },
+  { role: 'Graduate Research Assistant', org: 'Georgia Institute of Technology, US', years: '2015 – 2021' },
+  { role: 'Research Engineering Intern', org: 'VMware, US', years: 'Summer 2017' },
+  { role: 'Visiting Researcher', org: 'New York University Abu Dhabi, UAE', years: 'Summer 2016' },
+  { role: 'Research Engineer', org: 'New York University Abu Dhabi, UAE', years: '2013 – 2015' },
+  { role: 'Graduate Research Assistant', org: 'TOBB University of Economics and Technology, Turkey', years: '2011 – 2013' },
+];
+
+const industryExperience = [
+  { role: 'Staff Software Engineer | Tech-Lead', org: 'ID.me, US', years: '2025 – present' },
+  { role: 'Senior Software Engineer', org: 'ByteDance/TikTok Inc., US', years: '2022 – 2025' },
+  { role: 'Co-Founding Software Engineer', org: 'Rakun Software R&D, Turkey', years: '2012 – 2013' },
+  { role: 'Embedded System Developer', org: 'ASELSAN (Armed Forces Foundation Company), Turkey', years: '2011 – 2012' },
+];
+
+// Research & Projects — grouped by organization, each project expandable
+const projectGroups = [
+  {
+    org: 'ID.me, US',
+    projects: [
+      {
+        name: 'Identity Platform Architecture & Leadership',
+        bullets: [
+          "Architect and lead the company's authentication, authorization, and identity verification platform — the core revenue infrastructure processing billions of monthly transactions — partnering directly with C-suite, product, and engineering leadership to set technical direction across cross-functional teams.",
+          'Leading the company-wide re-platforming from a monolithic Ruby-on-Rails system to Java-based microservices, defining service boundaries, migration patterns, and rollout strategy across IAM, AuthN/AuthZ, and OAuth pipelines for login, signup, account recovery, and verification flows.',
+          'Force-multiplied senior engineering output by leading design reviews, unblocking architectural decisions, and driving execution across multiple senior engineers and cross-functional teams.',
+          'Established the company-wide API Council standard — authored the review template and process now adopted org-wide and approved by C-suite, product, and engineering leadership.',
+        ],
+      },
+      {
+        name: 'Foundational Platform Services',
+        bullets: [
+          'Designed and shipped three foundational platform services now powering org-wide authentication: (i) Password Authentication Service handling the full credential lifecycle at billions of monthly transactions; (ii) Centralized Outbound Messaging Platform unifying email, SMS, voice, push, and in-app channels for transactional and marketing traffic across every business unit; (iii) SMS & Voice OTP Verification Platform with CRUD, verification, and GSM-provider phone validation APIs.',
+        ],
+      },
+      {
+        name: 'Agentic AI Development Framework (24× productivity)',
+        bullets: [
+          'Built a one-shot agentic AI development framework that delivered a 24× productivity multiplier on new service development. The framework turns an approved design doc into a production-ready service end-to-end — codebase, schema migrations, CI/CD, observability, and infrastructure provisioning — by orchestrating planner-auditor and developer-reviewer agent teams in an adversarial, test-first loop with cross-plan context continuity.',
+          'Integrates GitHub Actions, Vault, Consul, Nomad, Harness, Terraform, database role provisioning, Prometheus, and Grafana, collapsing weeks of manual deployment toil into a single Claude slash command. Built product-agnostic from day one.',
+          'Impact: delivered the SMS OTP service to production in 1–2 weeks with one engineer, versus the 3–4 months and two senior engineers required for the comparable Email OTP service built the traditional way. Now adopted by a 7-engineer team building the next generation of auth, verification, and identity products including Passkey and biometric authentication.',
+        ],
+      },
+    ],
+  },
+  {
+    org: 'ByteDance/TikTok Inc., US',
+    projects: [
+      {
+        name: 'Leadership',
+        bullets: [
+          'Proposed and prioritized various projects for account security, improving privacy of user data, building infrastructure for account remediation and password-less signup/login mechanisms.',
+          'Led building ML systems to (i) detect account takeovers and fake account creation, and (ii) account profiling.',
+          'Created 1–2 year road maps for account security products that I proposed and landed MVPs.',
+        ],
+      },
+      {
+        name: 'Research',
+        bullets: [
+          'Proposed and landed novel cryptographic methods for enhancing privacy and security of PII data.',
+          'Led development of a new secure MPC method for building a private contact-list discovery pipeline.',
+          'Led design and development of Zero Trust Infrastructure (ZTI) to securely communicate PII and sensitive data transmission.',
+          'Invented a novel flow incorporating Passkey and OAuth 2.0 protocols to address the verified identifier issue at signup. The idea is under adoption by Google and Apple passkey teams and is under patenting process.',
+          'Became the company advocate in the Biometrics Working Group of FIDO Alliance.',
+        ],
+      },
+      {
+        name: 'TikTok Passkey',
+        bullets: [
+          'Landed Passkey in the TikTok App and prioritized new projects to increase its adoption.',
+          'Built and led the 2-year road-map for the adoption of passkey across different TikTok apps and teams.',
+          'Led TikTok to join the FIDO Alliance.',
+          'Over 100 million users have activated the feature on iOS and Android devices globally.',
+        ],
+      },
+      {
+        name: 'Account Remediation',
+        bullets: [
+          'Proposed a novel remediation infrastructure that was prioritized by the leadership.',
+          'Led XFN teams to build this infrastructure, including (i) ML models detecting account takeovers (ATO), suspicious login transactions and high-risk profiles, and (ii) in-app account re-verification, recovery, and security check-up frameworks to kick out adversaries from hacked/suspicious accounts.',
+          'Cut manual ticketing and human operator workforce by 30 times.',
+        ],
+      },
+    ],
+  },
+  {
+    org: 'YouCert Inc., US',
+    projects: [
+      {
+        name: 'Research and Leadership',
+        bullets: [
+          'Led the development of MVPs in confidential biometric surveillance and verification, and secure ML inference by utilizing homomorphic encryption, post-quantum cryptography, MPC, OIDC, and SSO.',
+          'Led building the authentication system for a customer providing remote critical-site management.',
+          'Led discussions with investors, law enforcement and non-profit organizations for potential products.',
+        ],
+      },
+    ],
+  },
+  {
+    org: 'Georgia Institute of Technology, US',
+    projects: [
+      {
+        name: 'Privacy-Preserving Fuzzy Database Search',
+        bullets: [
+          'Designed an encrypted fuzzy (e.g., biometrics, medical images) database query protocol, called fuzzy labeled private set intersection.',
+          'Implemented a privacy-preserving biometric search plug-in for CCTV surveillance systems, upon FaceNet, locality-sensitive hashes, secret sharing, secure multi-party computation and post-quantum cryptography.',
+          'Published USENIX’21 and PPML’21 papers, and filed a USPTO patent.',
+        ],
+        link: '/projects/flpsi-fuzzy-psi',
+      },
+      {
+        name: 'Privacy-Preserving Remote Biometric Authentication System',
+        bullets: [
+          'Designed an encrypted biometric verification system upon a zero-knowledge-proof protocol, by transforming DL inferences to cryptographic hashes.',
+          'Designed a Generative Adversarial Network (Style-GAN)-based entropy measurement mechanism.',
+          'Implemented an encrypted biometric enrollment/authentication system with Android and NodeJS front-ends and a RESTful identity provider (IdP) server, compatible with the OpenID Connect (OIDC) protocol.',
+          'Developed a password manager system on top of our authentication mechanism.',
+          'Published an AsiaCCS’21 paper and a USPTO patent.',
+        ],
+        link: '/projects/privacy-biometric-auth',
+      },
+      {
+        name: 'Breaking MLaaS and Building Live Biometric Verification',
+        bullets: [
+          'Proved vulnerability of major MLaaS systems (e.g., Azure Cognitive Services, Amazon Rekognition) against attacks ranging from the crudest copy-paste attacks to DL-based synthesis attacks.',
+          'Designed a liveness detection protocol on top of face/speech recognition and a random Captcha-based cryptographic challenge-response scheme.',
+          'Implemented an Android application to conduct user studies and security analysis.',
+          'Published an NDSS’18 paper, a SOUPS’2018 poster and a USPTO patent.',
+        ],
+        link: '/projects/rtcaptcha',
+      },
+      {
+        name: 'Automating Stock Market Manipulation',
+        bullets: [
+          'Studied the feasibility of using a botnet to automate stock market manipulation, incorporating data from U.S. Securities and Exchange Commission files and dark web marketplace listings.',
+          'Contributed to analyzing the SEC cases and related work.',
+          'Co-authored ACSAC’20 and IEEE S&P’21 Magazine papers.',
+        ],
+      },
+    ],
+  },
+  {
+    org: 'VMware, US',
+    projects: [
+      {
+        name: 'Mobile Device Tracking System',
+        bullets: [
+          'Conducted research on acoustic signal analysis for mobile device identification and de-anonymization.',
+          'Developed a large-scale signal processing and machine learning model to fingerprint device-specific acoustic and camera sensors.',
+          'Implemented an Android application and fingerprinted around 1000 individual mobile devices.',
+          'Published two USPTO patents.',
+        ],
+        link: '/projects/sensor-fingerprinting',
+      },
+    ],
+  },
+  {
+    org: 'New York University Abu Dhabi, UAE',
+    projects: [
+      {
+        name: 'Social Media Crawler',
+        bullets: [
+          'Developed a multimedia crawler that collects millions of publicly shared images per day from social media platforms (e.g., Flickr) and analyzes their EXIF metadata to profile non-doctored image parameters.',
+        ],
+      },
+      {
+        name: 'Encoded JPEG Data Discriminator',
+        bullets: [
+          'Designed an encoded JPEG data discriminator by leveraging the JPEG standards, EXIF tags, and Huffman coding properties.',
+          'Developed an open-source tool that can discriminate an arbitrary encoded JPEG data chunk among 1000 file types with 98% accuracy.',
+        ],
+      },
+      {
+        name: 'Recovering Orphaned JPEG Fragments with Missing Metadata',
+        bullets: [
+          'Designed a novel JPEG decoder that can recover arbitrarily given encoded data without the existence of decoding and assembling parameters (metadata).',
+          'Designed a camera-sensor-fingerprinting-based JPEG fragment position identifier to assemble recovered orphaned chunks.',
+          'Published IEEE TIFS’15, TIFS’19, and WIFS’17 papers.',
+        ],
+        link: '/projects/jpgscraper',
+      },
+    ],
+  },
+  {
+    org: 'Rakun Software R&D, Turkey',
+    projects: [
+      {
+        name: 'Remote Cardiac Monitoring',
+        bullets: [
+          'Proposed and led development of a remote monitoring system for cardiac patients.',
+          'Developed a web-based control and monitoring system for a healthcare product testing company.',
+          'Received seed funding of $60K from the Ministry of Science, Industry and Technology of Turkey.',
+        ],
+      },
+    ],
+  },
+  {
+    org: 'ASELSAN (Armed Forces Foundation Company), Turkey',
+    projects: [
+      {
+        name: 'Naval Embedded Systems',
+        bullets: [
+          'Built and developed an embedded system and software for the anti-submarine warfare unit in the National Warship Project of Turkey.',
+          'Designed and developed an embedded power cabinet control system of the torpedo mixing unit, and built the micro-computer running the embedded system.',
+        ],
+      },
+    ],
+  },
+  {
+    org: 'TOBB University of Economics and Technology, Turkey',
+    projects: [
+      {
+        name: 'Speech Activity Detector',
+        bullets: [
+          'Developed an ML model using support vector machines and Mel-frequency/spectrum features of speech signals to discriminate them against non-speech audio.',
+          'Implemented a Matlab-based tool and conducted extensive analysis considering variations in gender, language, age, ambient noise, audio loudness and noisiness.',
+          'Published in Speech Comm’14.',
+        ],
+        link: '/projects/audio-forensics',
+      },
+      {
+        name: 'Audio Compression History and Tamper Detection',
+        bullets: [
+          'Designed and developed an automated tool to detect transcoded audio and cut-paste-swap forgeries in audio signals.',
+          'Simulated extensive forgery scenarios, then trained an SVM-based ML model using objective speech quality features to learn forgery artefacts.',
+          'Published in IEEE ICCSPA’13 and IEEE SIU’14 conferences.',
+        ],
+        link: '/projects/audio-forensics',
+      },
+      {
+        name: 'Lifetime Optimization of Sensor Networks',
+        bullets: [
+          'Designed and analyzed different WSN models using linear programming to optimize their lifetime considering different topologies, scenarios, attack models and hardware specs.',
+          'Implemented and open-sourced various (mixed-)integer programming models measuring the impact of (i) transmission power control strategies, (ii) attacking critical nodes, and (iii) scalable routing scenarios on the lifetime of WSNs.',
+          'Published IEEE TC’13, IEEE SIU’13, Ad Hoc Networks’14 and IEEE SAS’15 papers.',
+        ],
+        link: '/projects/optimization-wsn',
+      },
+    ],
+  },
+];
+
+const service = [
+  {
+    label: 'Program Committee Member of',
+    items: [{ name: 'IEEE International Conference on Parallel and Distributed Systems', years: '2024' }],
+  },
+  {
+    label: 'Technical Member of',
+    items: [
+      { name: 'Biometrics Working Group, FIDO Alliance', years: '2023 – 2024' },
+      { name: 'Subject Matter Expert, Homeland Defense & Security Information Analysis Center', years: '2018 – 2019' },
+    ],
+  },
+  {
+    label: 'External Reviewer of',
+    items: [
+      { name: 'USENIX Security Symposium', years: '2016 – 2022' },
+      { name: 'ACM Conference on Computer and Communications Security', years: '2018 – 2020' },
+      { name: 'IEEE Symposium on Security and Privacy', years: '2018 – 2020' },
+      { name: 'Network and Distributed System Security Symposium', years: '2017' },
+      { name: 'International Symposium on Research in Attacks, Intrusions, and Defenses', years: '2017' },
+      { name: 'International Symposium on Cyber Security Cryptography and Machine Learning', years: '2017' },
+      { name: 'Journal of Digital Forensics, Security and Law', years: '2015' },
+      { name: 'Digital Signal Processing, Elsevier', years: '2014' },
+    ],
+  },
+  {
+    label: 'Reviewer of',
+    items: [
+      { name: 'The Computer Journal, Oxford University Press', years: '2023' },
+      { name: 'IEEE Network Science and Engineering', years: '2022' },
+      { name: 'IEEE Journal of Biomedical and Health Informatics', years: '2022' },
+      { name: 'IEEE Transactions on Mobile Computing', years: '2021' },
+      { name: 'IEEE Transactions on Dependable and Secure Computing', years: '2020 – 2021' },
+      { name: 'IEEE Transactions on Information Forensics and Security', years: '2018 – 2020' },
+      { name: 'Speech Communication, Elsevier', years: '2019' },
+      { name: 'Turkish Journal of Electrical Engineering and Computer Sciences', years: '2017' },
+      { name: 'International Journal of Distributed Sensor Networks', years: '2015' },
+      { name: 'Signal, Image and Video Processing, Springer', years: '2014' },
+      { name: 'International Journal of Machine Learning and Cybernetics, Springer', years: '2014' },
+      { name: 'IEEE Systems Journal', years: '2014' },
+      { name: 'Complex Adaptive Systems, Missouri S&T, USA', years: '2014' },
+    ],
+  },
+];
+
+const teaching = [
+  {
+    label: 'Graduate Teaching Assistant, Georgia Institute of Technology, US',
+    items: [
+      { name: 'Network Security', years: '2018' },
+      { name: 'Introduction to Information Security', years: '2016 – 2017' },
+    ],
+  },
+  {
+    label: 'Graduate Teaching Assistant, TOBB University of Economics and Technology, Turkey',
+    items: [
+      { name: 'Operating Systems', years: '2013' },
+      { name: 'Microprocessors Laboratory', years: '2013' },
+      { name: 'Computer Networks', years: '2013' },
+      { name: 'Object Oriented Design and Programming with Java', years: '2012 – 2013' },
+      { name: 'Introduction to Programming with C++', years: '2012 – 2013' },
+      { name: 'Design and Analysis of Algorithms', years: '2012' },
+    ],
+  },
+];
+
+const awards = [
+  { name: 'Postdoctoral Research Funding, Cisco Systems & Georgia Research Alliance', years: '2021' },
+  { name: "Georgia Tech Demo Day People's Choice Award ($1,000), IISP, Georgia Tech", years: '2020' },
+  { name: 'The Create-X Launch Invitation Award ($4,000), CreateX', years: '2020' },
+  { name: 'RSA Security Conference Travel Award ($4,000), VentureLab', years: '2020' },
+  { name: 'Cybersecurity Summit Panel of Experts Award ($1,000), IISP, Georgia Tech', years: '2019' },
+  { name: 'The Create-X Launch Invitation Award, CreateX', years: '2018' },
+  { name: 'Startup Seed Funding ($60,000 cash), Ministry of Science, Industry and Technology of Turkey', years: '2012' },
+];
+
+const media = [
+  { outlet: 'TechCrunch', text: 'Think fast – this system watches you answer questions to make sure you are human', url: 'https://techcrunch.com/2018/02/20/think-fast-this-system-watches-you-answer-questions-to-make-sure-youre-human/' },
+  { outlet: 'MIT Technology Review', text: 'Das ultrasichere Captcha (in German)', url: 'https://www.heise.de/select/tr/2018/5/1525057281299245' },
+  { outlet: 'GovCIO Media', text: 'Captcha Goes Real Time to Fool Machine Learning', url: 'https://govciomedia.com/captcha-goes-real-time-to-fool-machine-learning/' },
+  { outlet: 'ScienceDaily', text: 'Real-time Captcha technique improves biometric authentication', url: 'https://www.sciencedaily.com/releases/2018/02/180219141219.htm' },
+  { outlet: 'Security Advisor ME', text: 'Biometrics: a security bane or boon?', url: 'https://www.tahawultech.com/features/biometrics-security-bane-or-boon/' },
+];
+
+const skills = [
+  {
+    category: 'Languages',
+    items: ['Java', 'Go', 'C++', 'Python', 'C#', 'MATLAB'],
+  },
+  {
+    category: 'Frameworks & Platforms',
+    items: ['Spring Boot'],
+  },
+  {
+    category: 'Identity & Authentication',
+    items: ['OAuth 2.0', 'OIDC', 'SAML', 'FIDO2 / WebAuthn / Passkey', 'Token Exchange', 'SSO'],
+  },
+  {
+    category: 'Applied Cryptography & Security',
+    items: ['Secure Multi-Party Computation (MPC)', 'Fully Homomorphic Encryption (FHE)', 'Post-Quantum Cryptography', 'Fuzzy Private Set Intersection', 'Privacy-Preserving Inference', 'Zero-Knowledge Proofs', 'HSM (Azure Key Vault, HashiCorp Vault)', 'TPM Device Attestation', 'Biometric Security'],
+  },
+  {
+    category: 'Infrastructure & DevOps',
+    items: ['Nomad', 'Consul', 'Terraform', 'Harness', 'GitHub Actions', 'Kubernetes', 'Redis', 'PostgreSQL', 'Prometheus', 'Grafana'],
+  },
+];
+---
+
+<BaseLayout title="CV · Erkam Uzun" description="Curriculum vitae — education, experience, projects, service, teaching, and awards.">
+  <div class="cv-head">
+    <h1>Curriculum Vitae</h1>
+  </div>
+  <p class="lead">
+    Publications and patents have dedicated pages:
+    <a href="/research">Publications</a> · <a href="/patents">Patents</a>.
+  </p>
+
+  <h2>Earned Degrees</h2>
+  <ul class="entry-list">
+    {degrees.map((d) => (
+      <li class="entry">
+        <div class="entry-row">
+          <span><strong>{d.title}</strong>, {d.org}</span>
+          <span class="years">{d.years}</span>
+        </div>
+        {d.detail && <p class="entry-detail">{d.detail}</p>}
+      </li>
+    ))}
+  </ul>
+
+  <h2>Employment History</h2>
+  <div class="indent">
+    <h3 class="sub">Academic and Research Appointments</h3>
+    <ul class="entry-list indent">
+      {academicAppointments.map((e) => (
+        <li class="entry">
+          <div class="entry-row">
+            <span><strong>{e.role}.</strong> {e.org}</span>
+            <span class="years">{e.years}</span>
+          </div>
+        </li>
+      ))}
+    </ul>
+    <h3 class="sub">Industry Experience</h3>
+    <ul class="entry-list indent">
+      {industryExperience.map((e) => (
+        <li class="entry">
+          <div class="entry-row">
+            <span><strong>{e.role}.</strong> {e.org}</span>
+            <span class="years">{e.years}</span>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <h2>Technical Skills</h2>
+  <div class="indent skills">
+    {skills.map((s) => (
+      <p class="skill-line"><span class="skill-cat">{s.category}:</span> {s.items.join(', ')}</p>
+    ))}
+  </div>
+
+  <h2>Research &amp; Projects</h2>
+  <p class="hint">Click an employer to expand its projects.</p>
+  {projectGroups.map((group) => (
+    <details class="org">
+      <summary>
+        <span class="org-name">{group.org}</span>
+        <span class="chevron" aria-hidden="true">▸</span>
+      </summary>
+      <div class="org-body">
+        {group.projects.map((p) => (
+          <div class="proj">
+            <p class="proj-name">{p.name}</p>
+            <ul class="proj-bullets">
+              {p.bullets.map((b) => <li>{b}</li>)}
+            </ul>
+            {p.link && <p class="proj-link"><a href={p.link}>View project page →</a></p>}
+          </div>
+        ))}
+      </div>
+    </details>
+  ))}
+
+  <h2>Service</h2>
+  <div class="indent">
+    {service.map((s) => (
+      <div class="svc">
+        <h3 class="sub">{s.label}</h3>
+        <ul class="entry-list indent">
+          {s.items.map((i) => (
+            <li class="entry"><div class="entry-row"><span>{i.name}</span><span class="years">{i.years}</span></div></li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+
+  <h2>Teaching</h2>
+  <div class="indent">
+    {teaching.map((s) => (
+      <div class="svc">
+        <h3 class="sub">{s.label}</h3>
+        <ul class="entry-list indent">
+          {s.items.map((i) => (
+            <li class="entry"><div class="entry-row"><span>{i.name}</span><span class="years">{i.years}</span></div></li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+
+  <h2>Honors &amp; Awards</h2>
+  <ul class="entry-list">
+    {awards.map((a) => (
+      <li class="entry"><div class="entry-row"><span>{a.name}</span><span class="years">{a.years}</span></div></li>
+    ))}
+  </ul>
+
+  <h2>Media Coverage</h2>
+  <ul class="entry-list">
+    {media.map((m) => (
+      <li class="entry">
+        <span>
+          <strong><a href={m.url} target="_blank" rel="noopener noreferrer">{m.outlet}</a>:</strong> {m.text}
+        </span>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>
+
+<style>
+  .cv-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .cv-head h1 {
+    margin-bottom: 0;
+  }
+  .lead {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    margin: 0.75rem 0 0.5rem;
+  }
+  /* Section headers — strong accent (teal-blue) */
+  h2 {
+    color: var(--color-accent);
+    border-bottom: 2px solid var(--color-accent-muted);
+  }
+  /* Sub-section labels — lighter tone of the same blue, uppercase */
+  .sub {
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    color: var(--color-accent);
+    opacity: 0.78;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 1rem 0 0.4rem;
+  }
+  .hint, .entry-detail, .proj-link {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+  .skills {
+    margin-top: 0.4rem;
+  }
+  .skill-line {
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+    margin-bottom: 0.4rem;
+    color: var(--color-text);
+  }
+  .skill-cat {
+    font-weight: 700;
+    color: var(--color-accent);
+  }
+  .hint {
+    margin-bottom: 0.5rem;
+  }
+  .entry-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .entry {
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .entry:last-child {
+    border-bottom: none;
+  }
+  .entry-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: baseline;
+  }
+  .years {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .entry-detail {
+    margin-top: 0.2rem;
+  }
+
+  /* Indentation for nested sub-sections — subtle blue rule */
+  .indent {
+    padding-left: 1.1rem;
+    border-left: 2px solid var(--color-accent-muted);
+    margin-left: 0.1rem;
+  }
+  .indent .sub:first-child {
+    margin-top: 0.6rem;
+  }
+  /* nested list under a sub-label: softer, no double-strong border */
+  .entry-list.indent {
+    border-left-color: var(--color-border);
+  }
+
+  /* Employer-level accordion */
+  .org {
+    border-bottom: 1px solid var(--color-border-2);
+  }
+  .org > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 0.7rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--font-size-lg);
+  }
+  .org > summary::-webkit-details-marker {
+    display: none;
+  }
+  .org-name {
+    color: var(--color-accent);
+  }
+  .org:hover .org-name {
+    color: var(--color-accent-hover);
+  }
+  .org-body {
+    padding-left: 1.1rem;
+    border-left: 2px solid var(--color-accent-muted);
+    margin: 0.25rem 0 1rem 0.1rem;
+  }
+
+  /* Static projects (inside expanded employer) */
+  .proj {
+    padding: 0.55rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .proj:last-child {
+    border-bottom: none;
+  }
+  .proj-name {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+  .chevron {
+    color: var(--color-text-subtle);
+    transition: transform var(--transition-fast);
+    flex-shrink: 0;
+  }
+  .org[open] > summary .chevron {
+    transform: rotate(90deg);
+  }
+  .proj-bullets {
+    margin: 0.3rem 0 0.6rem;
+    padding-left: 1.1rem;
+  }
+  .proj-bullets li {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    line-height: 1.55;
+    margin-bottom: 0.3rem;
+  }
+  .proj-link {
+    margin: 0 0 0.7rem;
+  }
+  .proj-link a {
+    border-bottom: none;
+    font-weight: 500;
+  }
+</style>

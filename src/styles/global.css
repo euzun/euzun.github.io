@@ -1,0 +1,565 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Typography Scale ────────────────────────────── */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+  --font-size-6xl: 3.75rem;
+
+  /* ── Line Heights ────────────────────────────────── */
+  --line-height-tight: 1.25;
+  --line-height-snug: 1.375;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.65;
+  --line-height-loose: 2;
+
+  /* ── Font Families ───────────────────────────────── */
+  --font-display: "Fraunces", serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+
+  /* ── Spacing ─────────────────────────────────────── */
+  --spacing-section: 5rem;
+  --spacing-prose: 1.75rem;
+
+  /* ── Reading Width ───────────────────────────────── */
+  --measure-prose: 65ch;
+  --measure-wide: 80ch;
+
+  /* ── Border Radius ───────────────────────────────── */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-full: 9999px;
+
+  /* ── Shadows ─────────────────────────────────────── */
+  --shadow-card: 0 1px 3px oklch(0 0 0 / 0.08), 0 1px 2px oklch(0 0 0 / 0.06);
+  --shadow-hover: 0 4px 12px oklch(0 0 0 / 0.10), 0 2px 4px oklch(0 0 0 / 0.08);
+  --shadow-modal: 0 20px 60px oklch(0 0 0 / 0.20);
+
+  /* ── Transitions ─────────────────────────────────── */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+
+  /* ── Z-Index Scale ───────────────────────────────── */
+  --z-header: 50;
+  --z-overlay: 100;
+  --z-modal: 200;
+  --z-toast: 300;
+}
+
+/* ── Light Mode Color Tokens ─────────────────────────────────── */
+:root {
+  --color-bg: oklch(0.99 0 0);
+  --color-surface: oklch(0.97 0 0);
+  --color-surface-2: oklch(0.94 0 0);
+  --color-border: oklch(0.91 0 0);
+  --color-border-2: oklch(0.85 0 0);
+  --color-text: oklch(0.15 0 0);
+  --color-text-muted: oklch(0.45 0 0);
+  --color-text-subtle: oklch(0.62 0 0);
+
+  /* academicpages teal-blue */
+  --color-accent: oklch(0.58 0.09 232);
+  --color-accent-hover: oklch(0.50 0.10 232);
+  --color-accent-muted: oklch(0.93 0.03 232);
+  --color-accent-text: oklch(0.55 0.10 232);
+
+  --color-code-bg: oklch(0.97 0 0);
+}
+
+/* ── Dark Mode Color Tokens ──────────────────────────────────── */
+.dark {
+  --color-bg: oklch(0.11 0 0);
+  --color-surface: oklch(0.16 0 0);
+  --color-surface-2: oklch(0.21 0 0);
+  --color-border: oklch(0.27 0 0);
+  --color-border-2: oklch(0.33 0 0);
+  --color-text: oklch(0.96 0 0);
+  --color-text-muted: oklch(0.70 0 0);
+  --color-text-subtle: oklch(0.55 0 0);
+
+  /* academicpages teal-blue (brighter in dark mode) */
+  --color-accent: oklch(0.72 0.10 232);
+  --color-accent-hover: oklch(0.80 0.10 232);
+  --color-accent-muted: oklch(0.22 0.04 232);
+  --color-accent-text: oklch(0.74 0.10 232);
+
+  --color-code-bg: oklch(0.14 0 0);
+}
+
+/* ── Font Face Declarations ──────────────────────────────────── */
+@font-face {
+  font-family: "Fraunces";
+  src: url("/fonts/fraunces-variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/inter-variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono-variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+/* ── Base Typography ─────────────────────────────────────────── */
+html {
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  line-height: var(--line-height-normal);
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-size: var(--font-size-4xl);
+  line-height: var(--line-height-tight);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-size: var(--font-size-2xl);
+  line-height: var(--line-height-snug);
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+h3 {
+  font-family: var(--font-body);
+  font-size: var(--font-size-xl);
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+p {
+  line-height: var(--line-height-relaxed);
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.95em;
+}
+
+/* ── Prose (MDX) ─────────────────────────────────────────────── */
+.prose {
+  max-width: var(--measure-prose);
+  display: flow-root; /* contain floated figures */
+}
+
+.prose img.float-left {
+  float: left;
+  width: 240px;
+  max-width: 40%;
+  margin: 0.3rem 1.5rem 0.6rem 0;
+}
+
+@media (max-width: 560px) {
+  .prose img.float-left {
+    float: none;
+    width: 100%;
+    max-width: 100%;
+    margin: 1.25rem 0;
+  }
+}
+
+.prose h1 {
+  font-family: var(--font-display);
+  font-size: var(--font-size-5xl);
+  line-height: var(--line-height-tight);
+  margin-top: 0;
+}
+
+.prose h2 {
+  font-family: var(--font-display);
+  font-size: var(--font-size-3xl);
+  margin-top: 3rem;
+  margin-bottom: 0.85rem;
+  line-height: 1.14;
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+  font-optical-sizing: auto;
+}
+
+.prose h3 {
+  font-family: var(--font-body);
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+/* Lists — Tailwind's preflight strips markers/indent, so restore them. */
+.prose ul,
+.prose ol {
+  margin: var(--spacing-prose) 0;
+  padding-left: 1.6rem;
+}
+.prose ul { list-style: disc; }
+.prose ol { list-style: decimal; }
+.prose li {
+  margin: 0.45rem 0;
+  padding-left: 0.3rem;
+}
+.prose li::marker { color: var(--color-accent); }
+.prose li > ul,
+.prose li > ol { margin: 0.45rem 0; }
+
+.prose :where(p):not(:where([class~='not-prose'] *)) {
+  margin-top: var(--spacing-prose);
+  margin-bottom: var(--spacing-prose);
+}
+
+.prose code {
+  background-color: var(--color-code-bg);
+  padding: 0.125em 0.25em;
+  border-radius: var(--radius-sm);
+  font-size: 0.9em;
+}
+
+.prose pre {
+  background-color: var(--color-code-bg);
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+}
+
+/* Shiki dual-theme: swap to the dark theme's colors in night mode so
+   code-block text stays legible (otherwise the light theme's dark text
+   sits on a dark background and disappears). */
+.dark .prose pre.astro-code,
+.dark .prose pre.astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
+.prose img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  margin: 1.5rem 0;
+}
+
+.prose blockquote {
+  border-left: 3px solid var(--color-accent);
+  background: var(--color-surface);
+  padding: 0.75rem 1rem;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  margin: 1.5rem 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.prose blockquote p {
+  margin: 0;
+}
+
+/* ── Link Styles ─────────────────────────────────────────────── */
+a {
+  color: var(--color-accent-text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-accent-muted);
+  transition: border-color var(--transition-fast);
+}
+
+a:hover {
+  border-bottom-color: var(--color-accent);
+}
+
+/* ── Focus Visible ───────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* ── Reduced Motion ──────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Agentic SDLC post — bespoke figures & callouts ──────────────
+   Self-contained "scholarly paper" styling so the hand-built SVG
+   diagrams and inset boxes read identically in light and dark mode. */
+.prose .standfirst {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  line-height: 1.5;
+  font-style: italic;
+  color: var(--color-text-muted);
+  margin: 0 0 2rem;
+}
+
+.prose figure.fig-card {
+  background: #ffffff;
+  border: 1px solid #e4e0d6;
+  border-radius: 14px;
+  padding: 26px 24px 18px;
+  margin: 2.5rem 0;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02), 0 8px 28px -18px rgba(0, 0, 0, 0.25);
+}
+.prose figure.fig-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  border-radius: 0;
+}
+.prose figure.fig-card figcaption {
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: #6b6b6b;
+  margin-top: 16px;
+  text-align: left;
+}
+.prose figure.fig-card figcaption b,
+.prose figure.fig-card figcaption .fig-num {
+  font-family: var(--font-body);
+  color: #7c2d2d;
+  font-weight: 600;
+}
+.prose figure.fig-card figcaption code {
+  background: #f3f1ea;
+  color: #1a1a1a;
+  border: 1px solid #e4e0d6;
+}
+
+.prose .callout {
+  background: #f3f1ea;
+  border: 1px solid #e4e0d6;
+  border-left: 3px solid #8a6d1f;
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin: 1.75rem 0;
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: #1a1a1a;
+}
+.prose .callout .tag {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8a6d1f;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.prose .projectbox {
+  background: #f3f1ea;
+  border: 1px solid #e4e0d6;
+  border-radius: 12px;
+  padding: 18px 24px 6px;
+  margin: 1.9rem 0;
+}
+.prose .projectbox .tag {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #6b6b6b;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 10px;
+}
+.prose .projectbox p {
+  font-size: 0.96rem;
+  line-height: 1.55;
+  color: #3d3d3d;
+}
+.prose .projectbox .refs {
+  font-size: 0.8rem;
+  color: #6b6b6b;
+  font-family: var(--font-body);
+  border-top: 1px solid #e4e0d6;
+  padding-top: 10px;
+  margin-top: 4px;
+}
+
+.prose .tldr {
+  border: 1px solid #e4e0d6;
+  border-radius: 12px;
+  padding: 4px 26px;
+  margin: 2.25rem 0;
+  background: #faf8f3;
+}
+.prose .tldr h3 {
+  margin-top: 1.4rem;
+  color: #7c2d2d;
+  font-family: var(--font-body);
+}
+.prose .tldr p,
+.prose .tldr li {
+  color: #1a1a1a;
+}
+
+/* Blog post title — display serif tuned for multi-line headlines.
+   text-wrap:balance (set via the utility) evens the line breaks; the
+   rest tightens leading/tracking so stacked lines read as one unit. */
+.post-title {
+  line-height: 1.07;
+  letter-spacing: -0.021em;
+  font-optical-sizing: auto;
+}
+@media (max-width: 640px) {
+  .post-title {
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+  }
+}
+
+.prose .runbox {
+  background: #f3f1ea;
+  border: 1px solid #e4e0d6;
+  border-radius: 12px;
+  padding: 16px 20px 18px;
+  margin: 1.9rem 0;
+}
+.prose .runbox .tag {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #6b6b6b;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 12px;
+}
+.prose .runbox pre {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: #4a463e;
+  white-space: pre;
+}
+
+.prose .post-endnote {
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  color: var(--color-text-muted);
+  line-height: 1.55;
+  border-top: 1px solid var(--color-border);
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
+}
+
+/* ── Image lightbox ──────────────────────────────────────────── */
+img.zoomable {
+  cursor: zoom-in;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  background: rgba(10, 12, 14, 0.88);
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3.5rem 1.25rem 2rem;
+}
+.lightbox[hidden] {
+  display: none;
+}
+
+.lightbox-stage {
+  margin: auto; /* keeps it centered, and scrollable from the top when zoomed */
+  text-align: center;
+}
+.lightbox-stage img {
+  display: block;
+  margin: 0 auto;
+  max-width: min(1100px, 94vw);
+  max-height: calc(100vh - 8rem);
+  width: auto;
+  height: auto;
+  /* figures are transparent SVGs designed for a white card */
+  background: #fff;
+  border-radius: 10px;
+  padding: 14px;
+  box-shadow: 0 12px 60px rgba(0, 0, 0, 0.5);
+  cursor: zoom-in;
+}
+.lightbox.zoomed .lightbox-stage img {
+  max-width: none;
+  max-height: none;
+  width: min(1500px, 96vw);
+  cursor: zoom-out;
+}
+.lightbox-stage figcaption {
+  font-family: var(--font-body);
+  color: #c8d0d5;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin: 0.85rem auto 0;
+  max-width: 72ch;
+}
+
+.lightbox-close {
+  position: fixed;
+  top: 12px;
+  right: 18px;
+  z-index: 1;
+  font-size: 32px;
+  line-height: 1;
+  color: #fff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  padding: 4px 8px;
+}
+.lightbox-close:hover {
+  opacity: 1;
+}
+
+/* lock page scroll while the lightbox is open (the overlay scrolls instead) */
+html.lightbox-open {
+  overflow: hidden;
+}

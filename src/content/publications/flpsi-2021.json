@@ -1,0 +1,33 @@
+{
+  "id": "flpsi-2021",
+  "title": "Fuzzy Labeled Private Set Intersection with Applications to Private Real-Time Biometric Search",
+  "authors": [
+    {
+      "name": "E. Uzun",
+      "isErkam": true
+    },
+    {
+      "name": "S. Chung",
+      "isErkam": false
+    },
+    {
+      "name": "V. Kolesnikov",
+      "isErkam": false
+    },
+    {
+      "name": "A. Boldyreva",
+      "isErkam": false
+    },
+    {
+      "name": "W. Lee",
+      "isErkam": false
+    }
+  ],
+  "venue": "USENIX Security Symposium",
+  "venueType": "conference",
+  "year": 2021,
+  "url": "https://www.usenix.org/conference/usenixsecurity21/presentation/uzun",
+  "selected": true,
+  "projectSlug": "flpsi-fuzzy-psi",
+  "bibtex": "@inproceedings{flpsi-2021,\n  author = {E. Uzun, S. Chung, V. Kolesnikov, A. Boldyreva, W. Lee},\n  title = {Fuzzy Labeled Private Set Intersection with Applications to Private Real-Time Biometric Search},\n  booktitle = {USENIX Security Symposium},\n  year = {2021}\n}"
+}

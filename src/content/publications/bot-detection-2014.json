@@ -1,0 +1,31 @@
+{
+  "id": "bot-detection-2014",
+  "title": "An Automated Bot Detection System through Honeypots for Large-Scale",
+  "authors": [
+    {
+      "name": "F. Haltas",
+      "isErkam": false
+    },
+    {
+      "name": "E. Uzun",
+      "isErkam": true
+    },
+    {
+      "name": "N. Siseci",
+      "isErkam": false
+    },
+    {
+      "name": "A. Posul",
+      "isErkam": false
+    },
+    {
+      "name": "B. Emre",
+      "isErkam": false
+    }
+  ],
+  "venue": "International Conference on Cyber Conflict (CyCon)",
+  "venueType": "conference",
+  "year": 2014,
+  "bibtex": "@inproceedings{bot-detection-2014,\n  author = {F. Haltas, E. Uzun, N. Siseci, A. Posul, B. Emre},\n  title = {An Automated Bot Detection System through Honeypots for Large-Scale},\n  booktitle = {International Conference on Cyber Conflict (CyCon)},\n  year = {2014}\n}",
+  "url": "https://ieeexplore.ieee.org/document/6916407/"
+}

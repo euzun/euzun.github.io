@@ -1,0 +1,23 @@
+{
+  "id": "wsn-critical-node-2015",
+  "title": "The Impact of Elimination of the Most Critical Node on Wireless Sensor Network Lifetime",
+  "authors": [
+    {
+      "name": "A. Yuksel",
+      "isErkam": false
+    },
+    {
+      "name": "E. Uzun",
+      "isErkam": true
+    },
+    {
+      "name": "B. Tavli",
+      "isErkam": false
+    }
+  ],
+  "venue": "IEEE Sensors Applications Symposium (SAS)",
+  "venueType": "conference",
+  "year": 2015,
+  "url": "https://ieeexplore.ieee.org/document/7133609",
+  "bibtex": "@inproceedings{wsn-critical-node-2015,\n  author = {A. Yuksel, E. Uzun, B. Tavli},\n  title = {The Impact of Elimination of the Most Critical Node on Wireless Sensor Network Lifetime},\n  booktitle = {IEEE Sensors Applications Symposium (SAS)},\n  year = {2015}\n}"
+}

@@ -1,0 +1,51 @@
+---
+name: "Privacy-Preserving Surveillance (Fuzzy Labeled PSI)"
+shortDescription: "A protocol for privately querying biometric scans against a database — the querier learns only matching identities, and the server learns nothing about the query."
+role: "Researcher & Postdoc"
+org: "Georgia Tech"
+tech: ["Private Set Intersection", "FHE", "MPC", "FaceNet", "LSH", "Post-Quantum"]
+yearStart: 2018
+yearEnd: 2021
+featured: true
+hero: "/images/projects/flpsi-banner.svg"
+icon: "/images/projects/flpsi-icon.svg"
+heroAlt: "Privacy-Preserving Surveillance — Fuzzy Labeled Private Set Intersection"
+links:
+  paper: "https://www.usenix.org/conference/usenixsecurity21/presentation/uzun"
+videos:
+  - label: "Project overview & demo"
+    url: "https://youtu.be/gkmWRyoHs1A"
+  - label: "IISP Demo Day Finale — People's Choice Award"
+    url: "https://www.youtube.com/watch?v=MLMCgol5cpI"
+resources:
+  - label: "USENIX Security 2021 paper"
+    url: "https://www.usenix.org/conference/usenixsecurity21/presentation/uzun"
+  - label: "PPML Workshop 2021 paper (CCS)"
+    url: "https://ppml-workshop.github.io/ppml21/pdfs/ppml21-final53.pdf"
+  - label: "Technology License — Enabling Privacy-Preserving Search Over Fuzzy Databases"
+    url: "https://gatech.flintbox.com/technologies/9939d888-98c9-4c1c-81fc-6e31c5650f89"
+relatedPublications: ["flpsi-2021", "flpsi-ppml-2021"]
+---
+
+This research addresses privacy concerns in biometric surveillance systems. The
+project introduces a protocol that enables private queries of biometric scans
+against a database while maintaining confidentiality: a querier learns only the
+matching identities, while the database server gains no information about the
+query.
+
+The key innovation is **Fuzzy Labeled Private Set Intersection (FLPSI)**, which
+computes the intersection of noisy input sets by considering closeness/similarity
+instead of equality. The implementation integrates facial recognition with a
+Hamming-space mapping, locality-sensitive hashing, secret sharing, and
+post-quantum cryptography.
+
+![FLPSI system overview](/images/projects/flpsi.png)
+
+**Performance.** For a 10,000-row database, response time reaches 146 ms over WAN
+and 47 ms on LAN, transferring 12.1 MB with 0.94 s offline precomputation. At
+1 million rows, performance scales to 1.66 s (WAN) and 1.46 s (LAN). The system
+improves upon prior work by 9–25× (WAN) and 1.2–4× (LAN), with a 0.75% false
+non-matching rate comparable to plaintext face matching.
+
+**Recognition.** People's Choice Award and CREATE-X Launch Invitation at the
+IISP Demo Day Finale (2020).

@@ -1,0 +1,21 @@
+{
+  "id": "jpgscraper-2019",
+  "title": "JpgScraper: An Advanced Carver for JPEG Files",
+  "authors": [
+    {
+      "name": "E. Uzun",
+      "isErkam": true
+    },
+    {
+      "name": "H. T. Sencar",
+      "isErkam": false
+    }
+  ],
+  "venue": "IEEE Transactions on Information Forensics and Security",
+  "venueType": "journal",
+  "year": 2019,
+  "url": "https://ieeexplore.ieee.org/document/8897606",
+  "selected": true,
+  "projectSlug": "jpgscraper",
+  "bibtex": "@article{jpgscraper-2019,\n  author = {E. Uzun, H. T. Sencar},\n  title = {JpgScraper: An Advanced Carver for JPEG Files},\n  booktitle = {IEEE Transactions on Information Forensics and Security},\n  year = {2019}\n}"
+}

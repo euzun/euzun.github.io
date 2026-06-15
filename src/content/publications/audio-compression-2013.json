@@ -1,0 +1,23 @@
+{
+  "id": "audio-compression-2013",
+  "title": "Methods for Identifying Traces of Compression in Audio",
+  "authors": [
+    {
+      "name": "S. Hicsonmez",
+      "isErkam": false
+    },
+    {
+      "name": "E. Uzun",
+      "isErkam": true
+    },
+    {
+      "name": "H. T. Sencar",
+      "isErkam": false
+    }
+  ],
+  "venue": "IEEE ICCSPA",
+  "venueType": "conference",
+  "year": 2013,
+  "url": "https://ieeexplore.ieee.org/document/6487284",
+  "bibtex": "@inproceedings{audio-compression-2013,\n  author = {S. Hicsonmez, E. Uzun, H. T. Sencar},\n  title = {Methods for Identifying Traces of Compression in Audio},\n  booktitle = {IEEE ICCSPA},\n  year = {2013}\n}"
+}

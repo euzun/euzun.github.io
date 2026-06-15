@@ -1,0 +1,53 @@
+---
+name: "Privacy-Preserving Authentication (Justitia)"
+shortDescription: "Server-based biometric authentication without storing biometric templates remotely — bridging deep-learning inference with privacy-preserving primitives."
+role: "Researcher"
+org: "Georgia Tech"
+tech: ["Zero-Knowledge Proofs", "Fuzzy Extractors", "Style-GAN", "OIDC", "Biometrics"]
+yearStart: 2019
+yearEnd: 2021
+hero: "/images/projects/justitia-banner.svg"
+icon: "/images/projects/justitia-icon.svg"
+heroAlt: "Privacy-Preserving Authentication — Justitia"
+links:
+  paper: "https://dl.acm.org/doi/10.1145/3433210.3437512"
+videos:
+  - label: "Justitia — privacy-preserving authentication demo"
+    caption: "In this demo, Justitia acts as an OIDC Identity Provider (IdP) that enables privacy-preserving biometric authentication. The Justitia IdP is integrated into Bitwarden's OIDC login flow, and the video shows a user transferring his Bitwarden account from his enrollment device to another device — without any password or third-party login. The biometric never leaves the device: the client unlocks its enrolled fuzzy lockers locally to recover its key and signs the server's challenge, which Justitia verifies against the user's recorded public key."
+    diagram: "/images/projects/justitia-oidc.png"
+    diagramCaption: "Notation — Y: the user's handle/identity; X: the user's enrolled public key (X_pub), with X_priv the matching private key the client recovers locally by unlocking its biometric fuzzy lockers; R: a random challenge nonce; C = enc(R, X_pub): the encrypted challenge the server sends. The client returns R = dec(C, X_priv); access is granted only if R is valid — so the biometric never leaves the device."
+    url: "https://www.youtube.com/watch?v=e9HDdH5TY2Q"
+resources:
+  - label: "Code — justitia"
+    url: "https://github.com/euzun/justitia"
+  - label: "AsiaCCS 2021 paper"
+    url: "https://dl.acm.org/doi/10.1145/3433210.3437512"
+  - label: "Technology License — Privacy-Preserving Remote Biometric Authentication"
+    url: "https://gatech.flintbox.com/technologies/6abdc399-943a-433e-bac4-047caa47d9e5"
+  - label: "Patent — Privacy preserving face-based authentication (US20210034729A1)"
+    url: "https://patents.google.com/patent/US20210034729A1/en"
+relatedPublications: ["biometric-key-2021"]
+---
+
+This research addresses privacy concerns in biometric authentication by enabling
+server-based authentication **without storing biometric templates on remote
+servers**. The project, called **Justitia**, bridges deep-learning inference
+methods with privacy-preserving primitives.
+
+![Justitia system overview](/images/projects/justitia.png)
+
+The core innovation transforms face and voice biometric processing to work with
+fuzzy extractors while maintaining accuracy. The system achieves 0.33% false
+rejection at zero false acceptance on benchmark testing, with multimodal face and
+voice reaching 1.32% false rejection at zero false acceptance. Security
+assessments indicate approximately 25–33 bits of security depending on modality,
+measured via a Generative Adversarial Network (Style-GAN)-based entropy
+mechanism.
+
+An encrypted enrollment/authentication system was implemented with Android and
+Node.js front-ends and a RESTful identity provider (IdP) server compatible with
+the OpenID Connect (OIDC) protocol, with a password manager built on top of the
+authentication mechanism.
+
+**Recognition.** Cybersecurity Summit poster session award ($1,000, 2019) and
+CREATE-X Startup Invitation award (2018).

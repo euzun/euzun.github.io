@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400" role="img" aria-label="Image Forensics">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#15303d"/>
+      <stop offset="1" stop-color="#2f6f88"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="400" fill="url(#g)"/>
+  <rect x="60" y="110" width="180" height="180" rx="30" fill="#ffffff" fill-opacity="0.10"/>
+  <!-- fragmented pixel grid -->
+  <g fill="#ffffff">
+    <rect x="104" y="154" width="28" height="28" rx="4" fill-opacity="0.9"/>
+    <rect x="136" y="154" width="28" height="28" rx="4" fill-opacity="0.45"/>
+    <rect x="168" y="154" width="28" height="28" rx="4" fill-opacity="0.7"/>
+    <rect x="104" y="186" width="28" height="28" rx="4" fill-opacity="0.4"/>
+    <rect x="136" y="186" width="28" height="28" rx="4" fill-opacity="0.85"/>
+    <rect x="168" y="186" width="28" height="28" rx="4" fill-opacity="0.3"/>
+    <rect x="104" y="218" width="28" height="28" rx="4" fill-opacity="0.65"/>
+    <rect x="136" y="218" width="28" height="28" rx="4" fill-opacity="0.3"/>
+    <rect x="168" y="218" width="28" height="28" rx="4" fill-opacity="0.75"/>
+  </g>
+  <text x="300" y="188" font-family="Georgia, 'Times New Roman', serif" font-size="54" font-weight="700" fill="#ffffff">Image Forensics</text>
+  <text x="302" y="234" font-family="Inter, system-ui, sans-serif" font-size="23" fill="#ffffff" fill-opacity="0.82">Orphaned JPEG carving · sensor-noise fragment assembly</text>
+</svg>

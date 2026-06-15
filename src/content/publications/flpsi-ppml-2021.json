@@ -1,0 +1,32 @@
+{
+  "id": "flpsi-ppml-2021",
+  "title": "Privacy Preserving Surveillance from Fuzzy Labeled Private Set Intersection",
+  "authors": [
+    {
+      "name": "E. Uzun",
+      "isErkam": true
+    },
+    {
+      "name": "S. Chung",
+      "isErkam": false
+    },
+    {
+      "name": "V. Kolesnikov",
+      "isErkam": false
+    },
+    {
+      "name": "A. Boldyreva",
+      "isErkam": false
+    },
+    {
+      "name": "W. Lee",
+      "isErkam": false
+    }
+  ],
+  "venue": "Privacy Preserving Machine Learning Workshop (CCS)",
+  "venueType": "workshop",
+  "year": 2021,
+  "url": "https://ppml-workshop.github.io/ppml21/pdfs/ppml21-final53.pdf",
+  "projectSlug": "flpsi-fuzzy-psi",
+  "bibtex": "@inproceedings{flpsi-ppml-2021,\n  author = {E. Uzun, S. Chung, V. Kolesnikov, A. Boldyreva, W. Lee},\n  title = {Privacy Preserving Surveillance from Fuzzy Labeled Private Set Intersection},\n  booktitle = {Privacy Preserving Machine Learning Workshop (CCS)},\n  year = {2021}\n}"
+}

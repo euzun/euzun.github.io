@@ -1,0 +1,27 @@
+{
+  "id": "smartgrid-routing-2014",
+  "title": "The Impact of Scalable Routing on Lifetime of Smart Grid Communication Networks",
+  "authors": [
+    {
+      "name": "E. Uzun",
+      "isErkam": true
+    },
+    {
+      "name": "B. Tavli",
+      "isErkam": false
+    },
+    {
+      "name": "K. Bicakci",
+      "isErkam": false
+    },
+    {
+      "name": "D. Incebacak",
+      "isErkam": false
+    }
+  ],
+  "venue": "Ad Hoc Networks (Elsevier)",
+  "venueType": "journal",
+  "year": 2014,
+  "url": "https://www.sciencedirect.com/science/article/abs/pii/S1570870514001048",
+  "bibtex": "@article{smartgrid-routing-2014,\n  author = {E. Uzun, B. Tavli, K. Bicakci, D. Incebacak},\n  title = {The Impact of Scalable Routing on Lifetime of Smart Grid Communication Networks},\n  booktitle = {Ad Hoc Networks (Elsevier)},\n  year = {2014}\n}"
+}

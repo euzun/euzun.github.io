@@ -1,0 +1,91 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const talks = (await getCollection('talks')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+
+const fmt = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+---
+
+<BaseLayout title="Talks · Erkam Uzun" description="Conference talks, presentations, and invited lectures.">
+  <h1>Talks &amp; Presentations</h1>
+  <p class="lead">
+    Selected conference presentations and invited talks, drawn from my
+    publications and lecture appearances.
+  </p>
+
+  <ol class="talk-list">
+    {talks.map((talk) => (
+      <li class="talk-item">
+        <p class="talk-title">
+          {talk.data.eventUrl ? (
+            <a href={talk.data.eventUrl} target="_blank" rel="noopener noreferrer">{talk.data.title}</a>
+          ) : (
+            talk.data.title
+          )}
+        </p>
+        <p class="talk-meta">
+          <span class="talk-event">{talk.data.event}</span>
+          {talk.data.location && <> · {talk.data.location}</>}
+          · {fmt(talk.data.date)}
+        </p>
+        <p class="talk-links">
+          {talk.data.videoUrl && <a href={talk.data.videoUrl} target="_blank" rel="noopener noreferrer">Video ↗</a>}
+          {talk.data.slidesUrl && <a href={talk.data.slidesUrl} target="_blank" rel="noopener noreferrer">Slides ↗</a>}
+          {talk.data.relatedPublication && <a href="/research">Related paper →</a>}
+        </p>
+      </li>
+    ))}
+  </ol>
+</BaseLayout>
+
+<style>
+  .lead {
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+  }
+  .talk-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .talk-item {
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .talk-item:last-child {
+    border-bottom: none;
+  }
+  .talk-title {
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--color-text);
+  }
+  .talk-title a {
+    color: var(--color-text);
+    border-bottom: none;
+  }
+  .talk-title a:hover {
+    color: var(--color-accent);
+  }
+  .talk-meta {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin-top: 0.2rem;
+  }
+  .talk-event {
+    font-style: italic;
+  }
+  .talk-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.35rem;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+  }
+  .talk-links a {
+    border-bottom: none;
+  }
+</style>

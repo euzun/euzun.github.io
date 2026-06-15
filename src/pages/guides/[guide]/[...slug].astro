@@ -1,0 +1,71 @@
+---
+import GuideLayout from '../../../layouts/GuideLayout.astro';
+import { getCollection, render } from 'astro:content';
+import { getGuidePages, buildToc } from '../../../lib/guides';
+import { GUIDES_REPO, GUIDES_REPO_BRANCH } from '../../../lib/constants';
+
+export async function getStaticPaths() {
+  const metas = await getCollection('guideMeta');
+  const metaBySlug = new Map(metas.map((m) => [m.data.slug, m.data]));
+
+  const allGuides = [
+    ...new Set((await getCollection('guides')).map((e) => e.id.split('/')[0])),
+  ];
+
+  const paths = [];
+  for (const guide of allGuides) {
+    const pages = await getGuidePages(guide);
+    const meta = metaBySlug.get(guide);
+    const sectionTitles = meta?.sectionTitles ?? {};
+    // Serializable TOC passed to the sidebar nav on every page of this guide.
+    const toc = buildToc(pages, sectionTitles).map((s) => ({
+      num: s.num,
+      title: s.title,
+      pages: s.pages.map((p) => ({
+        href: p.href,
+        numLabel: p.numLabel,
+        title: p.title,
+        id: p.id,
+      })),
+    }));
+    pages.forEach((p, i) => {
+      const prev = i > 0 ? pages[i - 1] : null;
+      const next = i < pages.length - 1 ? pages[i + 1] : null;
+      paths.push({
+        params: { guide, slug: p.slug },
+        props: {
+          entry: p.entry,
+          guideTitle: meta?.title ?? guide,
+          guideHref: `/guides/${guide}`,
+          section: `${p.sectionNum} · ${sectionTitles[p.sectionDir] ?? p.sectionDir}`,
+          toc,
+          currentId: p.id,
+          editUrl: `${GUIDES_REPO}/edit/${GUIDES_REPO_BRANCH}/${p.id}.md`,
+          prev: prev ? { href: prev.href, label: `${prev.numLabel} — ${prev.title}` } : null,
+          next: next ? { href: next.href, label: `${next.numLabel} — ${next.title}` } : null,
+        },
+      });
+    });
+  }
+  return paths;
+}
+
+const { entry, guideTitle, guideHref, section, toc, currentId, editUrl, prev, next } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<GuideLayout
+  title={entry.data.title}
+  guideTitle={guideTitle}
+  guideHref={guideHref}
+  section={section}
+  lede={entry.data.lede}
+  description={entry.data.description ?? entry.data.lede}
+  toc={toc}
+  currentId={currentId}
+  editUrl={editUrl}
+  prev={prev}
+  next={next}
+>
+  <Content />
+</GuideLayout>

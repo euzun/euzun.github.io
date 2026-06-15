@@ -1,0 +1,100 @@
+---
+import BaseHead from '../components/head/BaseHead.astro';
+import Header from '../components/layout/Header.astro';
+import Sidebar from '../components/layout/Sidebar.astro';
+import Footer from '../components/layout/Footer.astro';
+import SkipLink from '../components/layout/SkipLink.astro';
+import Lightbox from '../components/ui/Lightbox.astro';
+import { GOATCOUNTER_CODE } from '../lib/constants';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  pubDate?: Date;
+}
+
+const { title, description, image, pubDate } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} image={image} pubDate={pubDate} />
+  </head>
+  <body>
+    <SkipLink />
+    <Header currentPath={Astro.url.pathname} />
+    <div class="layout-shell">
+      <div class="layout-sidebar">
+        <slot name="sidebar"><Sidebar /></slot>
+      </div>
+      <main id="content" class="layout-main">
+        <slot />
+      </main>
+    </div>
+    <Footer />
+    <Lightbox />
+    {GOATCOUNTER_CODE && (
+      <script
+        is:inline
+        data-goatcounter={`https://${GOATCOUNTER_CODE}.goatcounter.com/count`}
+        async
+        src="//gc.zgo.at/count.js"
+      ></script>
+    )}
+  </body>
+</html>
+
+<style>
+  :global(html) {
+    height: 100%;
+  }
+
+  :global(body) {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  :global(main) {
+    flex: 1;
+  }
+
+  .layout-shell {
+    flex: 1;
+    width: 100%;
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 2.5rem 1rem 1rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .layout-sidebar {
+    /* stacked above content on small screens */
+  }
+
+  @media (min-width: 1024px) {
+    .layout-shell {
+      grid-template-columns: 16rem 1fr;
+      padding: 3rem 1.5rem 1rem;
+      gap: 3.5rem;
+    }
+
+    .layout-sidebar {
+      position: sticky;
+      top: 4.5rem;
+      align-self: start;
+    }
+  }
+
+  .layout-main {
+    min-width: 0;
+  }
+</style>

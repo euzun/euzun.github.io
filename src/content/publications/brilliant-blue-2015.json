@@ -1,0 +1,31 @@
+{
+  "id": "brilliant-blue-2015",
+  "title": "Brilliant blue G assisted macular surgery: the effect of air infusion on contrast recognisability in internal limiting membrane peeling",
+  "authors": [
+    {
+      "name": "Y. Totan",
+      "isErkam": false
+    },
+    {
+      "name": "E. Guler",
+      "isErkam": false
+    },
+    {
+      "name": "F. Guragaç",
+      "isErkam": false
+    },
+    {
+      "name": "E. Uzun",
+      "isErkam": true
+    },
+    {
+      "name": "E. Dogdu",
+      "isErkam": false
+    }
+  ],
+  "venue": "British Journal of Ophthalmology",
+  "venueType": "journal",
+  "year": 2015,
+  "url": "https://pubmed.ncbi.nlm.nih.gov/25091954/",
+  "bibtex": "@article{brilliant-blue-2015,\n  author = {Y. Totan, E. Guler, F. Guragaç, E. Uzun, E. Dogdu},\n  title = {Brilliant blue G assisted macular surgery: the effect of air infusion on contrast recognisability in internal limiting membrane peeling},\n  booktitle = {British Journal of Ophthalmology},\n  year = {2015}\n}"
+}

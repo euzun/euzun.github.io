@@ -1,0 +1,58 @@
+<svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tiered viability advisory mapping outcomes to effort, with a floor tier of 'not worth it'. The human decides.">
+<style>
+  .svg-title{font-family:'Inter','Optima','Gill Sans',sans-serif;font-weight:600;}
+  .svg-label{font-family:'Inter','Optima','Gill Sans',sans-serif;}
+  .svg-mono{font-family:'JetBrains Mono','SFMono-Regular',ui-monospace,Menlo,monospace;}
+</style>
+
+        <!-- input -->
+        <g class="svg-label">
+          <rect x="20" y="118" width="150" height="64" rx="10" fill="#f7f4ec" stroke="#e4e0d6"/>
+          <text x="95" y="142" text-anchor="middle" font-size="12.5" fill="#1a1a1a" font-weight="600">Viability agent</text>
+          <text x="95" y="160" text-anchor="middle" font-size="10" fill="#6b6b6b">literature · impact</text>
+          <text x="95" y="173" text-anchor="middle" font-size="10" fill="#6b6b6b">· cost</text>
+        </g>
+        <path d="M170,150 L206,150" stroke="#7c2d2d" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+
+        <!-- tiers -->
+        <g class="svg-label" font-size="11.5">
+          <rect x="212" y="22" width="328" height="50" rx="9" fill="#fff" stroke="#cfcabb"/>
+          <text x="228" y="42" font-size="13" fill="#2f5d3a" font-weight="600">Broadest scope</text>
+          <text x="228" y="60" font-size="10.5" fill="#6b6b6b">all contributions · exhaustive evaluation · highest cost</text>
+
+          <rect x="212" y="80" width="328" height="50" rx="9" fill="#fff" stroke="#cfcabb"/>
+          <text x="228" y="100" font-size="13" fill="#5a6d1f" font-weight="600">Moderate scope</text>
+          <text x="228" y="118" font-size="10.5" fill="#6b6b6b">core contributions · focused evaluation · medium cost</text>
+
+          <rect x="212" y="138" width="328" height="50" rx="9" fill="#fff" stroke="#cfcabb"/>
+          <text x="228" y="158" font-size="13" fill="#8a6d1f" font-weight="600">Minimal scope</text>
+          <text x="228" y="176" font-size="10.5" fill="#6b6b6b">smallest useful contribution + released artifact · low cost</text>
+
+          <rect x="212" y="196" width="328" height="46" rx="9" fill="#faf2f2" stroke="#d8b8b8"/>
+          <text x="228" y="216" font-size="13" fill="#7c2d2d" font-weight="600">Floor · not worth it</text>
+          <text x="228" y="233" font-size="10.5" fill="#9a6b6b">…at any scope, and here’s the evidence why</text>
+        </g>
+
+        <!-- arrows to tiers -->
+        <g stroke="#b0a890" stroke-width="1.4" fill="none">
+          <path d="M206,150 C240,150 200,47 210,47" marker-end="url(#ar)" opacity="0.55"/>
+          <path d="M206,150 C236,150 200,105 210,105" marker-end="url(#ar)" opacity="0.55"/>
+          <path d="M206,150 L210,163" marker-end="url(#ar)" opacity="0.7"/>
+          <path d="M206,150 C236,150 200,219 210,219" marker-end="url(#ar)" opacity="0.55"/>
+        </g>
+
+        <!-- human decision -->
+        <g class="svg-label">
+          <rect x="566" y="100" width="134" height="92" rx="10" fill="#e4f0e6" stroke="#b6d6bc"/>
+          <text x="633" y="128" text-anchor="middle" font-size="13" fill="#2f5d3a" font-weight="600">✋ Human</text>
+          <text x="633" y="146" text-anchor="middle" font-size="11.5" fill="#2f5d3a">decides</text>
+          <text x="633" y="168" text-anchor="middle" font-size="9.5" fill="#3f7a4f">choose tier ·</text>
+          <text x="633" y="181" text-anchor="middle" font-size="9.5" fill="#3f7a4f">kill · pivot</text>
+        </g>
+        <g stroke="#6b8460" stroke-width="1.3" fill="none">
+          <line x1="540" y1="47" x2="566" y2="120" marker-end="url(#ar)" opacity="0.5"/>
+          <line x1="540" y1="161" x2="566" y2="150" marker-end="url(#ar)" opacity="0.5"/>
+          <line x1="540" y1="219" x2="566" y2="172" marker-end="url(#ar)" opacity="0.5"/>
+        </g>
+        <text x="633" y="214" text-anchor="middle" class="svg-label" font-size="9.5" fill="#9a9484" font-style="italic">advisory in, decision out</text>
+      </svg>

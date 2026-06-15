@@ -1,0 +1,70 @@
+<svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The per-sub-plan adversarial cycle: plan, audit, agree (capped), implement, review, agree (capped), then merge.">
+<style>
+  .svg-title{font-family:'Inter','Optima','Gill Sans',sans-serif;font-weight:600;}
+  .svg-label{font-family:'Inter','Optima','Gill Sans',sans-serif;}
+  .svg-mono{font-family:'JetBrains Mono','SFMono-Regular',ui-monospace,Menlo,monospace;}
+</style>
+
+        <defs>
+          <marker id="arc" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+            <path d="M0,0 L8,4.5 L0,9 Z" fill="#7c2d2d"/>
+          </marker>
+          <marker id="arcb" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
+            <path d="M0,0 L7,4 L0,8 Z" fill="#8a6d1f"/>
+          </marker>
+        </defs>
+
+        <!-- fresh context badge -->
+        <rect x="20" y="20" width="220" height="30" rx="15" fill="#f0ece1" stroke="#cfcabb"/>
+        <text x="36" y="39" class="svg-label" font-size="11" fill="#6b6b6b">↻ fresh context · full state ingested</text>
+
+        <!-- PLAN side -->
+        <g class="svg-label">
+          <circle cx="130" cy="135" r="46" fill="#fff" stroke="#7c2d2d" stroke-width="1.6"/>
+          <text x="130" y="130" text-anchor="middle" font-size="13" fill="#7c2d2d" font-weight="600">Planner</text>
+          <text x="130" y="148" text-anchor="middle" font-size="9.5" fill="#6b6b6b">plan, no code</text>
+
+          <circle cx="300" cy="135" r="46" fill="#fff" stroke="#8a6d1f" stroke-width="1.6"/>
+          <text x="300" y="130" text-anchor="middle" font-size="13" fill="#8a6d1f" font-weight="600">Auditor</text>
+          <text x="300" y="148" text-anchor="middle" font-size="9.5" fill="#6b6b6b">attacks plan</text>
+        </g>
+        <!-- adversarial arrows plan -->
+        <path d="M176,122 C215,108 261,108 285,118" stroke="#7c2d2d" stroke-width="1.5" fill="none" marker-end="url(#arc)"/>
+        <path d="M285,152 C261,162 215,162 176,150" stroke="#8a6d1f" stroke-width="1.5" fill="none" marker-end="url(#arcb)"/>
+        <text x="215" y="98" text-anchor="middle" class="svg-label" font-size="9.5" fill="#9a9484" font-style="italic">≤ 2 rounds</text>
+
+        <text x="215" y="200" text-anchor="middle" class="svg-label" font-size="11" fill="#2f5d3a" font-weight="600">plan-agreement ✓</text>
+
+        <!-- arrow to implement -->
+        <path d="M346,160 C420,200 420,90 470,118" stroke="#7c2d2d" stroke-width="1.8" fill="none" marker-end="url(#arc)"/>
+
+        <!-- IMPLEMENT side -->
+        <g class="svg-label">
+          <circle cx="500" cy="135" r="46" fill="#fff" stroke="#7c2d2d" stroke-width="1.6"/>
+          <text x="500" y="130" text-anchor="middle" font-size="13" fill="#7c2d2d" font-weight="600">Implementer</text>
+          <text x="500" y="148" text-anchor="middle" font-size="9.5" fill="#6b6b6b">builds the plan</text>
+
+          <circle cx="640" cy="135" r="46" fill="#fff" stroke="#8a6d1f" stroke-width="1.6"/>
+          <text x="640" y="128" text-anchor="middle" font-size="12.5" fill="#8a6d1f" font-weight="600">Reviewer</text>
+          <text x="640" y="145" text-anchor="middle" font-size="9" fill="#6b6b6b">attacks code +</text>
+          <text x="640" y="156" text-anchor="middle" font-size="9" fill="#6b6b6b">test-theater</text>
+        </g>
+        <path d="M544,122 C575,110 605,110 624,118" stroke="#7c2d2d" stroke-width="1.5" fill="none" marker-end="url(#arc)"/>
+        <path d="M624,152 C605,162 575,162 544,150" stroke="#8a6d1f" stroke-width="1.5" fill="none" marker-end="url(#arcb)"/>
+        <text x="585" y="98" text-anchor="middle" class="svg-label" font-size="9.5" fill="#9a9484" font-style="italic">≤ 2 rounds</text>
+        <text x="572" y="200" text-anchor="middle" class="svg-label" font-size="11" fill="#2f5d3a" font-weight="600">imp-agreement ✓</text>
+
+        <!-- test-first note -->
+        <rect x="430" y="218" width="266" height="30" rx="8" fill="#e8f1f5"/>
+        <text x="445" y="237" class="svg-mono" font-size="10" fill="#1f6f8b">test-first: red → green visible in git</text>
+
+        <!-- escalation path -->
+        <rect x="20" y="250" width="380" height="52" rx="10" fill="#faf2f2" stroke="#d8b8b8"/>
+        <text x="36" y="270" class="svg-label" font-size="11.5" fill="#7c2d2d" font-weight="600">✋ no convergence in 2 rounds?</text>
+        <text x="36" y="288" class="svg-label" font-size="10.5" fill="#9a6b6b">stop · escalate with BOTH positions · human adjudicates</text>
+
+        <!-- merge -->
+        <path d="M618,181 C618,230 720,250 660,272" stroke="#2f5d3a" stroke-width="1.6" fill="none" marker-end="url(#arc)" opacity="0.6"/>
+        <rect x="470" y="258" width="226" height="36" rx="9" fill="#e4f0e6" stroke="#b6d6bc"/>
+        <text x="486" y="280" class="svg-label" font-size="11" fill="#2f5d3a">merge --no-ff → final-signoff</text>
+      </svg>

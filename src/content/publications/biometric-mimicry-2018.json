@@ -1,0 +1,28 @@
+{
+  "id": "biometric-mimicry-2018",
+  "title": "Defending Against Biometric Mimicry: Real-time CAPTCHA-based Facial and Voice Recognition",
+  "authors": [
+    {
+      "name": "E. Uzun",
+      "isErkam": true
+    },
+    {
+      "name": "Simon P. Chung",
+      "isErkam": false
+    },
+    {
+      "name": "Irfan Essa",
+      "isErkam": false
+    },
+    {
+      "name": "Wenke Lee",
+      "isErkam": false
+    }
+  ],
+  "venue": "HDIAC Journal",
+  "venueType": "magazine",
+  "year": 2018,
+  "url": "https://hdiac.dtic.mil/articles/defending-against-biometric-mimicry-real-time-captcha-based-facial-and-voice-recognition/",
+  "projectSlug": "rtcaptcha",
+  "bibtex": "@article{biometric-mimicry-2018,\n  author = {E. Uzun, Simon P. Chung, Irfan Essa, Wenke Lee},\n  title = {Defending Against Biometric Mimicry: Real-time CAPTCHA-based Facial and Voice Recognition},\n  booktitle = {HDIAC Journal},\n  year = {2018}\n}"
+}
